@@ -8,27 +8,25 @@
 
   <title>Chaves - Cadastro</title>
 
-  <!-- Importando fontes do projeto -->
+  <!-- Importando fontes e estilos do projeto -->
   <link rel="stylesheet" href="./css/cadastro.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
   <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Oswald:wght@500;700&display=swap" rel="stylesheet">
+  <!-- Ícone para a setinha de voltar -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
 
 <body>
 
-  <!-- Barra de Navegação -->
-  <nav class="navbar">
-    <ul class="navbar-links">
-      <li><a href="index.html">Início</a></li>
-      <li><a href="cadastro.html" class="ativo">Cadastro</a></li>
-      <li><a href="login.html">Login</a></li>
-    </ul>
-  </nav>
+  <!-- Botão de Voltar (Setinha no topo esquerdo) -->
+  <a href="index.html" class="botao-voltar" title="Voltar para a página inicial">
+    <i class="fa-solid fa-arrow-left"></i>
+  </a>
 
-  <!-- Container Principal com o Fundo do Banner -->
+  <!-- Container Principal com o Fundo Fixo do Banner -->
   <div class="container-cadastro-principal">
     
-    <!-- Caixa Branca Grandona -->
+    <!-- Caixa Transparente Aumentada -->
     <div class="card-cadastro-container">
 
       <!-- Lado Esquerdo: Formulário de Cadastro -->
@@ -60,11 +58,10 @@
         </div>
       </div>
 
-      <!-- Lado Direito: Degradê Verde/Amarelo, Chapéu do Chaves e Frase de Login -->
+      <!-- Lado Direito: Degradê e Chapéu do Chaves -->
       <div class="lado-degrade-info">
         <div class="conteudo-direito">
           <div class="container-imagem-chapu">
-            <!-- Insira aqui a imagem do chapéu do Chaves ou um ícone relacionado -->
             <img src="assets/chaves_chapeu.png" alt="Chapéu do Chaves" class="img-chapu-ilustracao">
           </div>
           <h3>"Isso, isso, isso!"</h3>

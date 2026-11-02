@@ -16,57 +16,56 @@ html, body {
     overflow-x: hidden;
 }
 
-/* --- NAVBAR FIXA NO TOPO --- */
-.navbar {
+/* --- SETINHA DE VOLTAR NO TOPO ESQUERDO --- */
+.botao-voltar {
     position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    padding: 20px 40px;
-    z-index: 100;
-}
-
-.navbar-links {
-    list-style: none;
-    display: flex;
-    gap: 30px;
-}
-
-.navbar-links a {
+    top: 25px;
+    left: 30px;
+    width: 45px;
+    height: 45px;
+    background-color: rgba(0, 0, 0, 0.6);
     color: #ffffff;
-    text-decoration: none;
-    font-size: 1rem;
-    transition: color 0.3s ease;
-}
-
-.navbar-links a:hover, .navbar-links a.ativo {
-    color: #ffcc00;
-}
-
-/* --- CONTAINER COM O FUNDO DO BANNER PRINCIPAL --- */
-.container-cadastro-principal {
-    width: 100%;
-    min-height: 100vh;
-    background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.6)), url('../assets/capa_home.jpg');
-    background-size: cover;
-    background-position: center 30%;
     display: flex;
     justify-content: center;
     align-items: center;
-    padding: 120px 20px 60px 20px; /* Respiro por causa da navbar fixa */
+    border-radius: 50%;
+    text-decoration: none;
+    font-size: 1.2rem;
+    z-index: 100;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+    border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
-/* --- CAIXA BRANCA GRANDONA (CONTAINER DO CADASTRO) --- */
+.botao-voltar:hover {
+    background-color: rgba(255, 204, 0, 0.8);
+    color: #000000;
+    transform: scale(1.1);
+}
+
+/* --- CONTAINER COM O BANNER DE FUNDO FIXO --- */
+.container-cadastro-principal {
+    width: 100%;
+    min-height: 100vh;
+    /* Fundo fixo (paradinho) */
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../assets/banner.png');
+    background-size: cover;
+    background-position: center 30%;
+    background-attachment: fixed; 
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+}
+
+/* --- CAIXA DE CADASTRO AUMENTADA E TRANSPARENTE --- */
 .card-cadastro-container {
     width: 100%;
-    max-width: 950px;
-    background-color: #ffffff;
+    max-width: 1150px; /* Aumentado ainda mais para ficar bem espaçoso */
+    background-color: rgba(0, 0, 0, 0.65); /* Fundo transparente (vidro fosco) */
+    backdrop-filter: blur(10px); /* Efeito borrado elegante */
+    border: 1px solid rgba(255, 255, 255, 0.15);
     border-radius: 20px;
-    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
     display: flex;
     overflow: hidden;
 }
@@ -74,7 +73,7 @@ html, body {
 /* --- LADO ESQUERDO: FORMULÁRIO --- */
 .lado-formulario {
     flex: 1.2;
-    padding: 50px 40px;
+    padding: 65px 55px; /* Mais espaço interno para a caixa ficar robusta */
     display: flex;
     flex-direction: column;
     justify-content: center;
@@ -82,8 +81,8 @@ html, body {
 
 .lado-formulario h2 {
     font-family: 'Oswald', sans-serif;
-    color: #000000;
-    font-size: 2.2rem;
+    color: #ffffff;
+    font-size: 2.6rem;
     margin-bottom: 25px;
     text-transform: uppercase;
     letter-spacing: 1px;
@@ -92,7 +91,7 @@ html, body {
 .formulario {
     display: flex;
     flex-direction: column;
-    gap: 18px;
+    gap: 20px;
 }
 
 .campo {
@@ -102,34 +101,40 @@ html, body {
 }
 
 .campo span {
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: bold;
-    color: #333333;
+    color: #dddddd;
 }
 
 .campo input {
     width: 100%;
-    padding: 12px 15px;
-    border: 2px solid #ddd;
+    padding: 14px 16px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 2px solid rgba(255, 255, 255, 0.2);
+    color: #ffffff;
     border-radius: 8px;
     font-size: 1rem;
     outline: none;
     transition: border-color 0.3s ease;
 }
 
+.campo input::placeholder {
+    color: #aaaaaa;
+}
+
 .campo input:focus {
-    border-color: #e67e22;
+    border-color: #ffcc00;
 }
 
 /* Botão de Cadastro */
 .botao-cadastrar {
     margin-top: 10px;
     width: 100%;
-    padding: 14px;
+    padding: 15px;
     background-color: #ffcc00;
     color: #000000;
     font-family: 'Oswald', sans-serif;
-    font-size: 1.1rem;
+    font-size: 1.2rem;
     font-weight: 700;
     border: none;
     border-radius: 8px;
@@ -143,10 +148,11 @@ html, body {
     transform: translateY(-2px);
 }
 
-/* --- LADO DIREITO: DEGRADÊ VERDE/LARANJA E FRASE DE LOGIN --- */
+/* --- LADO DIREITO: DEGRADÊ E INFORMAÇÕES --- */
 .lado-degrade-info {
     flex: 1;
-    background: linear-gradient(135deg, #21770b 0%, #f39c12 100%);
+    background: linear-gradient(135deg, rgba(33, 119, 11, 0.8) 0%, rgba(243, 156, 18, 0.8) 100%);
+    backdrop-filter: blur(5px);
     display: flex;
     justify-content: center;
     align-items: center;
@@ -163,10 +169,8 @@ html, body {
 }
 
 .container-imagem-chapu {
-    width: 140px;
-    height: 140px;
-    border-radius: 50%;
-   
+    width: 150px;
+    height: 150px;
 }
 
 .img-chapu-ilustracao {
@@ -177,26 +181,26 @@ html, body {
 
 .conteudo-direito h3 {
     font-family: 'Bangers', cursive, sans-serif;
-    font-size: 2.5rem;
+    font-size: 2.8rem;
     letter-spacing: 1px;
     text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
 }
 
 .frase-convite {
-    font-size: 1rem;
+    font-size: 1.1rem;
     line-height: 1.5;
-    max-width: 250px;
+    max-width: 270px;
 }
 
 /* Botão Ir para o Login */
 .botao-ir-login {
     display: inline-block;
-    padding: 10px 24px;
+    padding: 12px 26px;
     background-color: rgba(0, 0, 0, 0.6);
     color: #ffffff;
     text-decoration: none;
     font-family: 'Oswald', sans-serif;
-    font-size: 0.95rem;
+    font-size: 1rem;
     font-weight: 700;
     border-radius: 6px;
     text-transform: uppercase;
@@ -216,5 +220,9 @@ html, body {
     }
     .lado-degrade-info {
         padding: 30px 20px;
+    }
+    .botao-voltar {
+        top: 15px;
+        left: 15px;
     }
 }
