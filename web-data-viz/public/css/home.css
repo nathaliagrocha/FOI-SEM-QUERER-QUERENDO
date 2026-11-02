@@ -67,13 +67,14 @@ html, body {
     font-weight: normal;
 }
 
-/* --- NAVBAR FIXA NO TOPO --- */
+/* --- NAVBAR MAIS TRANSPARENTE --- */
 .navbar {
     position: fixed;
     top: 0;
     left: 0;
     width: 100%;
-    background-color: rgba(0, 0, 0, 0.9);
+    background-color: rgba(0, 0, 0, 0.4); /* Bem transparente */
+    backdrop-filter: blur(5px); /* Efeito de vidro fosco elegante */
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -98,64 +99,163 @@ html, body {
     color: #ffcc00;
 }
 
-/* --- SEÇÃO DOS ARTIGOS (2 EM CIMA, 2 EMBAIXO) --- */
-.container-conteudo-lado-a-lado {
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-    gap: 50px;
-    padding: 80px 40px;
-    max-width: 1300px;
-    margin: 0 auto;
-    flex-wrap: wrap;
-    background-color: #000000; 
-    position: relative;
-    z-index: 2; 
-}
-
-.secao-artigo {
-    display: flex;
-    flex-direction: column; 
-    align-items: center;    
-    text-align: center;
-    background-color: transparent; 
-    border: none;                  
-    box-shadow: none;              
-    padding: 0;
-    flex: 0 1 500px; 
-    margin-bottom: 60px; 
-}
-
-.secao-artigo h2 {
-    font-family: Arial, sans-serif; 
-    color: #ffffff;
-    font-size: 1.6rem;
-    font-weight: bold;
-    letter-spacing: 0.5px;
-    margin-bottom: 25px;
-    text-shadow: none; 
-    text-transform: none; 
-}
-
-.secao-artigo .imagem-artigo {
+/* --- ELEMENTOS DECORATIVOS INTERCALADOS NO FUNDO PRETO --- */
+.elementos-fundo-intercalados {
+    position: absolute;
+    top: 0;
+    left: 0;
     width: 100%;
-    height: 320px;
-    object-fit: cover;
-    border: none;         
-    border-radius: 0;     
-    box-shadow: none;     
-    margin-bottom: 25px;
+    height: 100%;
+    pointer-events: none; /* Não atrapalha cliques ou seleções */
+    overflow: hidden;
+    z-index: 1; /* Fica acima do fundo preto, mas atrás do conteúdo principal */
 }
 
-.secao-artigo p {
+.decoracao {
+    position: absolute;
+    opacity: 0.15; /* Bem clarinho, estilo marca d'água */
+    filter: brightness(130%) contrast(90%);
+    width: 130px;
+}
+
+/* Intercalando os lados (Esquerda e Direita) descendo pela página preta */
+.item-barril.esquerda {
+    top: 110vh;
+    left: 4%;
+    transform: rotate(-10deg);
+}
+.item-chapeu.direita {
+    top: 140vh;
+    right: 4%;
+    transform: rotate(15deg);
+}
+
+.item-triciclo.esquerda {
+    top: 220vh;
+    left: 5%;
+    transform: rotate(8deg);
+    width: 160px;
+}
+.item-barril.direita {
+    top: 260vh;
+    right: 5%;
+    transform: rotate(-12deg);
+}
+
+.item-chapeu.esquerda {
+    top: 350vh;
+    left: 4%;
+    transform: rotate(-15deg);
+}
+.item-triciclo.direita {
+    top: 390vh;
+    right: 5%;
+    transform: rotate(10deg);
+    width: 160px;
+}
+
+/* --- CONTAINER GERAL DE CONTEÚDO --- */
+.container-conteudo-geral {
+    background-color: #000000;
+    position: relative;
+    z-index: 2;
+    padding: 130px 40px 40px 40px;
+}
+
+/* --- ESTILO DOS BLOCOS (DESTAQUE E SEÇÕES PADRÃO) --- */
+.secao-artigo-destaque,
+.secao-artigo-padrao {
+    width: 100%;
+    max-width: 1580px;
+    margin: 0 auto;
+    padding: 0 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.destaque-grid {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 40px;
+    width: 100%;
+    flex-wrap: nowrap;
+}
+
+.destaque-conteudo-texto {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    text-align: left;
+    max-width: 650px;
+}
+
+.destaque-conteudo-texto h2 {
+    font-family: Arial, sans-serif;
+    color: #ffffff;
+    font-size: 1.8rem;
+    font-weight: bold;
+    margin-bottom: 35px;
+    letter-spacing: 0.5px;
+    text-align: left;
+}
+
+.destaque-conteudo-texto p {
     font-family: Arial, sans-serif;
     color: #cccccc;
     font-size: 1.1rem;
     line-height: 1.7;
-    text-align: justify;
 }
 
-/* --- CONTAINER DO CARROSSEL --- */
+/* --- BARRINHAS VERTICAIS SEPARADORAS COLORIDAS --- */
+.linha-vertical {
+    width: 4px;
+    height: 480px; 
+    border-radius: 2px;
+    flex-shrink: 0;
+}
+
+.linha-verde {
+    background-color: #2ecc71; /* 1ª - Verde[cite: 2] */
+}
+
+.linha-laranja {
+    background-color: #e67e22; /* 2ª - Laranja[cite: 5] */
+}
+
+.linha-marrom {
+    background-color: #ffbb00; /* 3ª - Marrom[cite: 4] */
+}
+
+.linha-amarela {
+    background-color: #664212; /* 4ª - Amarelo[cite: 2] */
+}
+
+.destaque-imagem-container {
+    flex: 1;
+    max-width: 850px;
+}
+
+/* PADRÃO DE TAMANHO ÚNICO PARA TODAS AS IMAGENS DOS ARTIGOS */
+.imagem-artigo-grande {
+    width: 100%;
+    height: 480px;
+    object-fit: cover;
+    border-radius: 20px; 
+    display: block;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
+}
+
+/* --- CONTAINER DAS SEÇÕES PADRÃO (Espaçamento maior entre elas) --- */
+.container-secoes-padrao {
+    display: flex;
+    flex-direction: column;
+    gap: 90px; 
+    margin-top: 90px;
+}
+
+/* --- SEÇÃO DO CARROSSEL (De ponta a ponta, sem bordas, com efeito de zoom) --- */
 .carrossel-container {
     width: 100%;
     max-width: 100%;
@@ -163,7 +263,7 @@ html, body {
     position: relative;
     z-index: 2;
     padding: 0;
-    margin: 0;
+    margin: 90px 0 0 0;
     overflow: hidden;
 }
 
@@ -173,50 +273,38 @@ html, body {
     gap: 0;                 
     width: 100%;
     max-width: 100%;
-    overflow-x: auto;       
-    overflow-y: hidden;
-    scroll-snap-type: x mandatory;
-    scroll-behavior: smooth;
+    overflow: hidden; 
     padding: 0;
     margin: 0;
-}
-
-.carrossel-trilho::-webkit-scrollbar {
-    height: 6px;
-}
-.carrossel-trilho::-webkit-scrollbar-track {
-    background: #111;
-}
-.carrossel-trilho::-webkit-scrollbar-thumb {
-    background: #444;
-    border-radius: 3px;
 }
 
 .carrossel-linha {
     display: flex;
     gap: 0; 
-    width: 100%; /* Ocupa toda a largura da tela */
+    width: 100%; 
     margin: 0;
     padding: 0;
 }
 
 .carrossel-linha img {
-    height: 180px;         
-    flex: 1;               /* Faz com que cada imagem cresça e divida o espaço por igual */
-    width: 100%;           
+    height: 350px;         
+    flex: 1;               
+    width: 25%;            
     object-fit: cover;     
     display: block;
-    scroll-snap-align: start;
     border: none;
     border-radius: 0;      
-    margin: 0;
-    padding: 0;            
     filter: brightness(90%);
-    transition: filter 0.3s ease;
+    transition: transform 0.4s ease, filter 0.4s ease, z-index 0.4s ease;
 }
 
+/* Efeito ao passar o mouse: a imagem "salta" */
 .carrossel-linha img:hover {
-    filter: brightness(100%);
+    transform: scale(1.08); 
+    filter: brightness(100%); 
+    position: relative;
+    z-index: 10; 
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.8); 
 }
 
 /* --- SEÇÃO DE RODAPÉ (LEGADO) --- */
@@ -264,23 +352,21 @@ html, body {
     z-index: 2;
 }
 
-/* Caixa com fundo preto meio transparente e contorno */
 .caixa-contorno {
     max-width: 850px;
     width: 100%;
     padding: 40px;
     border: 2px solid rgba(255, 255, 255, 0.3); 
     border-radius: 8px;
-    background-color: rgba(0, 0, 0, 0.7); /* Fundo preto meio transparente */
+    background-color: rgba(0, 0, 0, 0.7); 
     display: flex;
     flex-direction: column;
     align-items: center;
 }
 
-/* Título "Isso, isso, isso!" em Bangers e amarelo */
 .caixa-contorno h1 {
     font-family: 'Bangers', cursive, sans-serif;
-    color: #ffcc00;
+    color: #ffffff;
     font-size: 3.5rem;
     font-weight: normal;
     letter-spacing: 2px;
@@ -296,7 +382,6 @@ html, body {
     text-align: center;
 }
 
-/* Botão Amarelo */
 .caixa-contorno button {
     font-family: 'Oswald', sans-serif;
     background-color: #ffcc00;
@@ -313,15 +398,16 @@ html, body {
 }
 
 .caixa-contorno button:hover {
-    background-color: #e6b800;
+    background-color: #ffffff;
     transform: translateY(-2px);
 }
-/* --- RODAPÉ DEFINITIVO (FOOTER) --- */
+
+/* --- FOOTER COM ALTURA MAIOR --- */
 .footer-principal {
     background-color: #000000;
     width: 100%;
-    padding: 40px 20px;
-    border-top: 1px solid rgba(255, 255, 255, 0.15); /* Linha sutil de separação */
+    padding: 60px 20px; /* Altura aumentada com padding maior */
+    border-top: 1px solid rgba(255, 255, 255, 0.15); 
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -362,4 +448,16 @@ html, body {
     color: #777777;
     font-size: 0.9rem;
     line-height: 1.5;
+}
+
+/* Responsividade para telas menores */
+@media (max-width: 900px) {
+    .destaque-grid {
+        flex-direction: column;
+    }
+    .linha-vertical {
+        width: 100%;
+        height: 4px;
+        margin: 20px 0;
+    }
 }
