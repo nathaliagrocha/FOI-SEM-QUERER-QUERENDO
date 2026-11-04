@@ -19,7 +19,7 @@
 <body>
 
   <!-- Botão de Voltar (Setinha no topo esquerdo) -->
-  <a href="home.html" class="botao-voltar" title="Voltar para a página inicial">
+  <a href="index.html" class="botao-voltar" title="Voltar para a página inicial">
     <i class="fa-solid fa-arrow-left"></i>
   </a>
 
@@ -36,22 +36,22 @@
         <div class="formulario">
           <div class="campo">
             <span>Nome:</span>
-            <input id="nome_input" type="text" placeholder="Seu nome completo" />
+            <input id="input_nome" type="text" placeholder="Seu nome completo" />
           </div>
 
           <div class="campo">
             <span>E-mail:</span>
-            <input id="email_input" type="text" placeholder="meuemail@provedor.com" />
+            <input id="input_email" type="text" placeholder="meuemail@provedor.com" />
           </div>
 
           <div class="campo">
             <span>Senha:</span>
-            <input id="senha_input" type="password" placeholder="******" />
+            <input id="input_senha" type="password" placeholder="******" />
           </div>
 
           <div class="campo">
             <span>Confirmação da Senha:</span>
-            <input id="confirmacao_senha_input" type="password" placeholder="******" />
+            <input id="input_confirmacao_senha" type="password" placeholder="******" />
           </div>
 
           <button class="botao-cadastrar" onclick="cadastrar()">Cadastrar</button>
@@ -76,31 +76,72 @@
 </body>
 </html>
 
-<SCRipt>
+<script>
 function cadastrar() {
-    // Recupere o valor dos inputs do seu HTML
     var nomeVar = input_nome.value;
     var emailVar = input_email.value;
-    var senhaVar = input_senha.value;
+    
+    // Transforma o e-mail inteiro em letras minúsculas
+    emailVar = emailVar.toLowerCase();
+    input_email.value = emailVar;
 
-    // Envio dos dados para a rota da API
+    var senhaVar = input_senha.value;
+    var confirmacaoSenhaVar = input_confirmacao_senha.value;
+
+    // 1. Verificar campos em branco
+    if (nomeVar == "" || emailVar == "" || senhaVar == "" || confirmacaoSenhaVar == "") {
+        alert("Preencha todos os campos!");
+        return false;
+    }
+
+    // 2. Validação básica de e-mail (usando indexOf)
+    if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1 || emailVar.indexOf(".@") != -1 || emailVar.indexOf("@.") != -1) {
+        alert("E-mail inválido! Verifique o '@', o '.com' e os pontos.");
+        return false;
+    }
+
+    // 3. Validação de tamanho mínimo da senha (8 caracteres)
+    if (senhaVar.length < 8) {
+        alert("A senha deve ter pelo menos 8 caracteres!");
+        return false;
+    }
+
+    // 4. Validação usando 'for' para garantir que tem pelo menos um número
+    var temNumero = false;
+    for (var i = 0; i < senhaVar.length; i++) {
+        var caractere = senhaVar[i];
+        if (caractere >= '0' && caractere <= '9') {
+            temNumero = true;
+        }
+    }
+
+    if (temNumero == false) {
+        alert("A senha precisa conter pelo menos um número!");
+        return false;
+    }
+
+    // 5. Confirmação de senha
+    if (senhaVar != confirmacaoSenhaVar) {
+        alert("A confirmação de senha está diferente da senha!");
+        return false;
+    }
+
     fetch("/usuarios/cadastrar", {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
         },
         body: JSON.stringify({
-            // As chaves devem ter o mesmo nome que o backend espera receber
             nomeServer: nomeVar,
             emailServer: emailVar,
             senhaServer: senhaVar
         }),
     }).then(function (resposta) {
         if (resposta.ok) {
-            window.alert("Cadastro realizado com sucesso!");
-            window.location = "login.html"; // Redireciona para o login
+            alert("Cadastro realizado com sucesso!");
+            location.href = "login.html"; 
         } else {
-            window.alert("Houve um erro no tentar realizar o cadastro!");
+            alert("Houve um erro ao tentar realizar o cadastro!");
         }
     }).catch(function (erro) {
         console.log(`#ERRO: ${erro}`);
@@ -108,4 +149,4 @@ function cadastrar() {
 
     return false;
 }
-</SCRipt>
+</script>

@@ -21,7 +21,7 @@
 <body>
 
     <!-- Botão de Voltar (Setinha no topo esquerdo) -->
-    <a href="home.html" class="botao-voltar" title="Voltar para a página inicial">
+    <a href="index.html" class="botao-voltar" title="Voltar para a página inicial">
         <i class="fa-solid fa-arrow-left"></i>
     </a>
 
@@ -77,9 +77,28 @@
 
 <script>
 function entrar() {
-    var emailVar = input_email.value;
-    var senhaVar = input_senha.value;
+    // Pega o valor dos inputs diretamente pelo ID
+    var emailVar = email_input.value;
+    var senhaVar = senha_input.value;
 
+    // 1. Verificar se os campos estão preenchidos
+    if (emailVar == "" || senhaVar == "") {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Preencha todos os campos para fazer o login!";
+        return false;
+    }
+
+    // 2. Validação básica de e-mail
+    if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "E-mail inválido! Deve conter '@' e '.com'.";
+        return false;
+    }
+
+    // Esconde o erro se estiver tudo certo
+    cardErro.style.display = "none";
+
+    // Envio para a autenticação
     fetch("/usuarios/autenticar", {
         method: "POST",
         headers: {
@@ -94,18 +113,18 @@ function entrar() {
             resposta.json().then(json => {
                 console.log(json);
                 
-                // Salvando os dados do usuário no navegador (localStorage) se precisar usar depois
                 localStorage.EMAIL_USUARIO = json.email;
                 localStorage.NOME_USUARIO = json.nome;
                 localStorage.ID_USUARIO = json.id;
 
-                window.location = "dashboard/mural.html"; // Redireciona para a tela principal/gráficos
+                location.href = "dashboard/mural.html";
             });
         } else {
-            window.alert("E-mail e/ou senha inválidos!");
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "E-mail e/ou senha inválidos!";
         }
     }).catch(function (erro) {
-        console.log(printError(erro));
+        console.log(`#ERRO: ${erro}`);
     });
 
     return false;
