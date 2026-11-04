@@ -19,7 +19,7 @@
 <body>
 
   <!-- Botão de Voltar (Setinha no topo esquerdo) -->
-  <a href="index.html" class="botao-voltar" title="Voltar para a página inicial">
+  <a href="home.html" class="botao-voltar" title="Voltar para a página inicial">
     <i class="fa-solid fa-arrow-left"></i>
   </a>
 
@@ -74,5 +74,38 @@
   </div>
 
 </body>
-
 </html>
+
+<SCRipt>
+function cadastrar() {
+    // Recupere o valor dos inputs do seu HTML
+    var nomeVar = input_nome.value;
+    var emailVar = input_email.value;
+    var senhaVar = input_senha.value;
+
+    // Envio dos dados para a rota da API
+    fetch("/usuarios/cadastrar", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+            // As chaves devem ter o mesmo nome que o backend espera receber
+            nomeServer: nomeVar,
+            emailServer: emailVar,
+            senhaServer: senhaVar
+        }),
+    }).then(function (resposta) {
+        if (resposta.ok) {
+            window.alert("Cadastro realizado com sucesso!");
+            window.location = "login.html"; // Redireciona para o login
+        } else {
+            window.alert("Houve um erro no tentar realizar o cadastro!");
+        }
+    }).catch(function (erro) {
+        console.log(`#ERRO: ${erro}`);
+    });
+
+    return false;
+}
+</SCRipt>
