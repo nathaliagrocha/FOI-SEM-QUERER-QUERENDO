@@ -2,7 +2,7 @@
 # 🏠 Foi Sem Querer Querendo
 
 <p align="center">
-  <img src="CAMINHO_DO_BANNER" alt="Banner do projeto Foi Sem Querer Querendo" width="100%">
+  <img src="banner.jfif" alt="Banner do projeto Foi Sem Querer Querendo" width="100%">
 </p>
 
 <p align="center">
@@ -62,57 +62,46 @@ As tecnologias utilizadas como base para o desenvolvimento da plataforma são:
 - **CSS3:** utilizado para a identidade visual, estilização, responsividade e apresentação dos componentes.
 - **JavaScript:** responsável por adicionar interatividade e implementar as funcionalidades da plataforma.
 
-## 🖥️ Demonstração do projeto
-
-Aqui ficarão algumas imagens para apresentar a interface e as funcionalidades desenvolvidas.
-
-<p align="center">
-  <strong> Página inicial </strong>
-</p>
-
-<p align="center">
-  <img src="CAMINHO_DA_IMAGEM_HOME" alt="Página inicial do projeto" width="85%">
-</p>
-
-<p align="center">
-  <strong> Página de Motivação </strong>
-</p>
-
-<p align="center">
-  <img src="CAMINHO_DA_IMAGEM_MOTIVACAO" alt="Página de motivação do projeto" width="85%">
-</p>
-
-<p align="center">
-  <strong> Plataforma interativa </strong>
-</p>
-
-<p align="center">
-  <img src="CAMINHO_DA_IMAGEM_PLATAFORMA" alt="Área interna da plataforma" width="85%">
-</p>
 
 *As imagens serão adicionadas conforme as telas forem desenvolvidas.*
 
 ## 🚀 Como executar o projeto
 
-Para visualizar o projeto localmente, siga os passos abaixo:
+Para testar o **Foi Sem Querer Querendo** na sua máquina, siga os passos abaixo:
 
-**1. Clone este repositório:**
+**1. Clone o repositório**
+
+No GitHub, copie o link do repositório e execute o comando no terminal:
 
 ```bash
 git clone LINK_DO_REPOSITORIO
 ```
 
-**2. Acesse a pasta do projeto:**
+**2. Abra a pasta do projeto**
+
+Após clonar o repositório, acesse a pasta que foi criada no seu computador.
+
+**3. Abra o CMD**
+
+Dentro da pasta do projeto, clique na barra de endereço do Explorador de Arquivos, digite `cmd` e pressione Enter.
+
+**4. Inicie a aplicação**
+
+Com o CMD aberto na pasta do projeto, execute:
 
 ```bash
-cd foi-sem-querer-querendo
+npm start
 ```
 
-**3. Abra o projeto:**
+**5. Acesse a plataforma**
 
-Abra o arquivo `index.html` no navegador ou utilize a extensão Live Server do Visual Studio Code.
+Após iniciar a aplicação, o terminal apresentará um endereço local, geralmente com o formato `http://localhost:PORTA`.
 
-*Os comandos e as instruções poderão ser atualizados conforme a estrutura final do projeto.*
+Pressione `Ctrl` e clique no link apresentado para abrir a plataforma no navegador.
+
+Pronto! Agora você poderá explorar e testar o Foi Sem Querer Querendo.
+
+*Observação: é necessário ter o Node.js instalado e as dependências do projeto configuradas. Caso seja necessário, execute `npm install` antes de iniciar a aplicação.*
 
 ## 📚 Contexto acadêmico
 
