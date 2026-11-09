@@ -46,8 +46,7 @@ html, body {
 .container-cadastro-principal {
     width: 100%;
     min-height: 100vh;
-    /* Fundo fixo (paradinho) */
-    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../assets/banner.png');
+    background-image: linear-gradient(rgba(0, 0, 0, 0.5), rgba(0, 0, 0, 0.5)), url('../assets/banner_cadastro.png');
     background-size: cover;
     background-position: center 30%;
     background-attachment: fixed; 
