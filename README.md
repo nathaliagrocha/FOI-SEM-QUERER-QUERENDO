@@ -2,7 +2,7 @@
 # 🏠 Foi Sem Querer Querendo
 
 <p align="center">
-  <img src="./bannerr_home.png" alt="Banner do projeto Foi Sem Querer Querendo" width="100%">
+  <img src="assets/bannerr_home.png" alt="Banner do projeto Foi Sem Querer Querendo" width="100%">
 </p>
 
 <p align="center">
