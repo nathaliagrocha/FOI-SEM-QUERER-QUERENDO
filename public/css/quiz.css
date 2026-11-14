@@ -345,10 +345,10 @@ hr {
     
     /* --- MEXA AQUI PARA POSICIONAR E REDIMENSIONAR O PÓDIO --- */
     position: relative;
-    top: -65px;    /* NEGATIVO sobe o pódio | POSITIVO desce */
+    top: 5px;    /* NEGATIVO sobe o pódio | POSITIVO desce */
     left: 3px;     /* NEGATIVO vai p/ esquerda | POSITIVO vai p/ direita */
     width: 92%;    /* Largura do card branco */
-    height: 440px; /* Altura do card branco (aumente ou diminua aqui) */
+    height: 562px; /* Altura do card branco (aumente ou diminua aqui) */
     /* ---------------------------------------------------------- */
 
     box-sizing: border-box;
@@ -364,6 +364,26 @@ hr {
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
 }
 
+/* Dá espaço na parte de baixo do card do pódio para a frase caber sem encostar nas barras */
+.podio-container {
+    padding-bottom: 50px !important; 
+}
+
+/* Posiciona a frase centralizada na parte inferior do card */
+.posicao.podio {
+    position: absolute;
+    bottom: 15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.posicao.podio p {
+    margin: 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--new-black);
+}
 .coluna {
     display: flex;
     flex-direction: column;
@@ -468,4 +488,53 @@ hr {
     height: 270px;  /* ALTURA: mexa livremente neste valor */
     top: 10px;       /* POSIÇÃO VERTICAL */
     left: 8px;      /* POSIÇÃO HORIZONTAL */
+}
+
+/* =========================================================
+   APENAS OS TÍTULOS NO TOPO (MANTENDO SEU LAYOUT ATUAL)
+   ========================================================= */
+
+/* 1. Coloca o título "Pódio da Vila" na parte de cima do card do pódio */
+.titulo-podio {
+    position: absolute;
+    top: 15px;
+    left: 0;
+    width: 100%;
+    text-align: center;
+}
+
+.titulo-podio p {
+    margin: 0;
+    font-size: 18px;
+    font-weight: bold;
+    color: var(--new-black);
+}
+
+
+
+.graficoBar p,
+.graficoPiz p,
+.graficoLine p {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+    font-weight: bold;
+    color: var(--new-black);
+    text-align: center;
+}
+
+
+/* Remova o bloco antigo de 'canvas' e coloque este: */
+.graficoBar,
+.graficoPiz,
+.graficoLine {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Faz o canvas ocupar o espaço livre sem esticar a resolução */
+.graficoBar canvas,
+.graficoPiz canvas,
+.graficoLine canvas {
+    flex: 1;
+    min-height: 0;
 }
