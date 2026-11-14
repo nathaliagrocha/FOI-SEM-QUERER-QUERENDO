@@ -19,3 +19,7 @@ qtdQuiz INT,
 fk_usuario INT,
 FOREIGN KEY (fk_usuario) REFERENCES usuario (id)
 );
+
+-- Observações:
+-- senha está definida como INT no script original; normalmente deveria ser VARCHAR (hash) para suportar textos
+-- Caso prefira, altere para VARCHAR(255) e armazene hashes seguros em produção.

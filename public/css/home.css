@@ -8,6 +8,8 @@
     box-sizing: border-box;
 }
 
+/* Comentários: estilos da página inicial (home). Define layout do banner, seções, carrossel e footer. */
+
 html, body {
     width: 100%;
     min-height: 100vh;

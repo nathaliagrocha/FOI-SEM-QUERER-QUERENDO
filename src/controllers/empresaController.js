@@ -1,5 +1,7 @@
 var empresaModel = require("../models/empresaModel");
 
+// Controller: buscarPorCnpj
+// Recebe cnpj via query string e retorna informações da empresa
 function buscarPorCnpj(req, res) {
   var cnpj = req.query.cnpj;
 
@@ -8,12 +10,16 @@ function buscarPorCnpj(req, res) {
   });
 }
 
+// Controller: listar
+// Retorna lista de empresas com campos essenciais
 function listar(req, res) {
   empresaModel.listar().then((resultado) => {
     res.status(200).json(resultado);
   });
 }
 
+// Controller: buscarPorId
+// Recebe id via params e retorna a empresa correspondente
 function buscarPorId(req, res) {
   var id = req.params.id;
 
@@ -22,6 +28,8 @@ function buscarPorId(req, res) {
   });
 }
 
+// Controller: cadastrar
+// Valida existência por CNPJ e insere nova empresa se não existir
 function cadastrar(req, res) {
   var cnpj = req.body.cnpj;
   var razaoSocial = req.body.razaoSocial;

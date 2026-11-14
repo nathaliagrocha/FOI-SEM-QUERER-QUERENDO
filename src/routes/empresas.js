@@ -3,19 +3,22 @@ var router = express.Router();
 
 var empresaController = require("../controllers/empresaController");
 
-//Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
+// Rota POST /cadastrar - cria nova empresa
 router.post("/cadastrar", function (req, res) {
     empresaController.cadastrar(req, res);
 })
 
+// Rota GET /buscar?cnpj=... - procura por CNPJ
 router.get("/buscar", function (req, res) {
     empresaController.buscarPorCnpj(req, res);
 });
 
+// Rota GET /buscar/:id - busca por id
 router.get("/buscar/:id", function (req, res) {
   empresaController.buscarPorId(req, res);
 });
 
+// Rota GET /listar - retorna todas as empresas
 router.get("/listar", function (req, res) {
   empresaController.listar(req, res);
 });

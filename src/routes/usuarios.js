@@ -3,11 +3,14 @@ var router = express.Router();
 
 var usuarioController = require("../controllers/usuarioController");
 
-//Recebendo os dados do html e direcionando para a função cadastrar de usuarioController.js
+// Rota POST /cadastrar
+// Recebe dados de cadastro do frontend (formulário) e delega para o controller
 router.post("/cadastrar", function (req, res) {
     usuarioController.cadastrar(req, res);
 })
 
+// Rota POST /autenticar
+// Recebe email e senha do frontend e chama a lógica de autenticação no controller
 router.post("/autenticar", function (req, res) {
     usuarioController.autenticar(req, res);
 });

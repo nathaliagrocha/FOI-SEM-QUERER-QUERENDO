@@ -1,5 +1,6 @@
 var alertas = [];
 
+// Busca dados de medida em tempo real para um aquário específico
 function obterdados(idAquario) {
     fetch(`/medidas/tempo-real/${idAquario}`)
         .then(resposta => {
@@ -20,6 +21,7 @@ function obterdados(idAquario) {
 
 }
 
+// Analisa a temperatura e decide nível de alerta, atualiza estado global
 function alertar(resposta, idAquario) {
     var temp = resposta[0].temperatura;
 
@@ -76,6 +78,7 @@ function alertar(resposta, idAquario) {
     }
 }
 
+// Adiciona/atualiza alerta na lista global e renderiza os cards
 function exibirAlerta(temp, idAquario, grauDeAviso, grauDeAvisoCor) {
     var indice = alertas.findIndex(item => item.idAquario == idAquario);
 
@@ -88,11 +91,13 @@ function exibirAlerta(temp, idAquario, grauDeAviso, grauDeAvisoCor) {
     exibirCards();
 }
 
+// Remove alerta da lista global
 function removerAlerta(idAquario) {
     alertas = alertas.filter(item => item.idAquario != idAquario);
     exibirCards();
 }
 
+// Renderiza os cards de alerta no elemento 'alerta' (assume existência no DOM)
 function exibirCards() {
     alerta.innerHTML = '';
 
@@ -102,6 +107,7 @@ function exibirCards() {
     }
 }
 
+// Converte objeto de alerta em bloco HTML (string)
 function transformarEmDiv({ idAquario, temp, grauDeAviso, grauDeAvisoCor }) {
 
     var descricao = JSON.parse(sessionStorage.AQUARIOS).find(item => item.id == idAquario).descricao;
@@ -117,6 +123,7 @@ function transformarEmDiv({ idAquario, temp, grauDeAviso, grauDeAvisoCor }) {
     `;
 }
 
+// Loop periódico que busca atualizações para todos os aquários armazenados na session
 function atualizacaoPeriodica() {
     JSON.parse(sessionStorage.AQUARIOS).forEach(item => {
         obterdados(item.id)

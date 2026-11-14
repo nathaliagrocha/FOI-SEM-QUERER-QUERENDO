@@ -1,5 +1,7 @@
 var database = require("../database/config");
 
+// Model: buscarUltimasMedidas
+// Monta query para obter as últimas medições (temperatura e momento) de um aquário
 function buscarUltimasMedidas(idAquario, limite_linhas) {
 
     var instrucaoSql = `SELECT 
@@ -14,6 +16,8 @@ function buscarUltimasMedidas(idAquario, limite_linhas) {
     return database.executar(instrucaoSql);
 }
 
+// Model: buscarMedidasEmTempoReal
+// Retorna a última medição registrada para um aquário (usado em updates em tempo real)
 function buscarMedidasEmTempoReal(idAquario) {
 
     var instrucaoSql = `SELECT 

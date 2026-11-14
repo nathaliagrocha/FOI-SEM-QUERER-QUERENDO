@@ -1,5 +1,7 @@
 var medidaModel = require("../models/medidaModel");
 
+// Controller: buscarUltimasMedidas
+// Recupera as últimas medições de um aquário (limite definido) e retorna em JSON
 function buscarUltimasMedidas(req, res) {
 
     const limite_linhas = 7;
@@ -22,6 +24,8 @@ function buscarUltimasMedidas(req, res) {
 }
 
 
+// Controller: buscarMedidasEmTempoReal
+// Busca a última medição do aquário para uso em atualização em tempo real
 function buscarMedidasEmTempoReal(req, res) {
 
     var idAquario = req.params.idAquario;
@@ -44,5 +48,5 @@ function buscarMedidasEmTempoReal(req, res) {
 module.exports = {
     buscarUltimasMedidas,
     buscarMedidasEmTempoReal
-
+ 
 }

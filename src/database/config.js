@@ -28,6 +28,8 @@ function executar(instrucao) {
             resolve(resultados);
         });
         conexao.on('error', function (erro) {
+            // Evento de erro na conexão: loga a mensagem (não faz throw direto aqui)
+            console.error("ERRO NO MySQL SERVER: ", erro.sqlMessage);
             return ("ERRO NO MySQL SERVER: ", erro.sqlMessage);
         });
     });

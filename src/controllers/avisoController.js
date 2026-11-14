@@ -1,5 +1,7 @@
 var avisoModel = require("../models/avisoModel");
 
+// Controller: listar
+// Retorna todos os avisos com dados do usuário relacionado
 function listar(req, res) {
     avisoModel.listar().then(function (resultado) {
         if (resultado.length > 0) {
@@ -14,6 +16,8 @@ function listar(req, res) {
     });
 }
 
+// Controller: listarPorUsuario
+// Retorna avisos publicados por um usuário específico (id em params)
 function listarPorUsuario(req, res) {
     var idUsuario = req.params.idUsuario;
 
@@ -39,6 +43,8 @@ function listarPorUsuario(req, res) {
         );
 }
 
+// Controller: pesquisarDescricao
+// Busca avisos cujo texto corresponda ao parâmetro passado
 function pesquisarDescricao(req, res) {
     var descricao = req.params.descricao;
 
@@ -60,6 +66,8 @@ function pesquisarDescricao(req, res) {
         );
 }
 
+// Controller: publicar
+// Cria um novo aviso associado a um usuário (id em params)
 function publicar(req, res) {
     var titulo = req.body.titulo;
     var descricao = req.body.descricao;
@@ -88,6 +96,8 @@ function publicar(req, res) {
     }
 }
 
+// Controller: editar
+// Atualiza a descrição de um aviso pelo id
 function editar(req, res) {
     var novaDescricao = req.body.descricao;
     var idAviso = req.params.idAviso;
@@ -105,9 +115,11 @@ function editar(req, res) {
                 res.status(500).json(erro.sqlMessage);
             }
         );
-
+    
 }
 
+// Controller: deletar
+// Remove um aviso pelo id
 function deletar(req, res) {
     var idAviso = req.params.idAviso;
 

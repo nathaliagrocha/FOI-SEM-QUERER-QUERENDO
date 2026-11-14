@@ -1,7 +1,9 @@
 var database = require("../database/config")
 
+// Model: autenticar
+// Monta e executa a query que busca usuário por email e senha
 function autenticar(email, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function entrar(): ", email, senha)
+    console.log("ACESSEI O USUARIO MODEL - autenticar\n\n Se ocorrer 'Error: connect ECONNREFUSED', verifique o DB e credenciais.");
     var instrucaoSql = `
         SELECT id, nome, email FROM usuario WHERE email = '${email}' AND senha = '${senha}';
     `;
@@ -9,12 +11,12 @@ function autenticar(email, senha) {
     return database.executar(instrucaoSql);
 }
 
-// Coloque os mesmos parâmetros aqui. Vá para a var instrucaoSql
+// Model: cadastrar
+// Monta e executa a query para inserir um novo usuário na tabela 'usuario'
 function cadastrar(nome, email, senha) {
-    console.log("ACESSEI O USUARIO MODEL \n \n\t\t >> Se aqui der erro de 'Error: connect ECONNREFUSED',\n \t\t >> verifique suas credenciais de acesso ao banco\n \t\t >> e se o servidor de seu BD está rodando corretamente. \n\n function cadastrar():", nome, email, senha);
+    console.log("ACESSEI O USUARIO MODEL - cadastrar\n\n Se ocorrer 'Error: connect ECONNREFUSED', verifique o DB e credenciais.");
     
-    // Insira exatamente a query do banco aqui, lembrando da nomenclatura exata nos valores
-    //  e na ordem de inserção dos dados.
+    // Query de inserção usando valores recebidos (atenção à SQL injection em ambientes reais)
     var instrucaoSql = `
         INSERT INTO usuario (nome, email, senha) VALUES ('${nome}', '${email}', '${senha}');
     `;

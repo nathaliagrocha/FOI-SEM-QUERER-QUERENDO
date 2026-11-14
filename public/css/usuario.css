@@ -1,0 +1,9 @@
+/* Arquivo de estilos para páginas de usuário (vazio atualmente)
+   Mantenha regras específicas do usuário aqui. */
+
+/* Exemplo: contêiner de perfil do usuário */
+.usuario-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}

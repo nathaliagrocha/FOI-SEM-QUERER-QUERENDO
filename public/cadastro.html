@@ -78,6 +78,7 @@
 
 <script>
 function cadastrar() {
+    // Captura valores dos inputs de cadastro
     var nomeVar = input_nome.value;
     var emailVar = input_email.value;
     
@@ -94,7 +95,7 @@ function cadastrar() {
         return false;
     }
 
-    // 2. Validação básica de e-mail (usando indexOf)
+    // 2. Validação básica de e-mail (checa '@' e '.com' e posições inválidas)
     if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1 || emailVar.indexOf(".@") != -1 || emailVar.indexOf("@.") != -1) {
         alert("E-mail inválido! Verifique o '@', o '.com' e os pontos.");
         return false;
@@ -106,7 +107,7 @@ function cadastrar() {
         return false;
     }
 
-    // 4. Validação usando 'for' para garantir que tem pelo menos um número
+    // 4. Verifica se a senha contém pelo menos um número (loop simples)
     var temNumero = false;
     for (var i = 0; i < senhaVar.length; i++) {
         var caractere = senhaVar[i];

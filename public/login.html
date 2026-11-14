@@ -77,7 +77,7 @@
 
 <script>
 function entrar() {
-    // Pega o valor dos inputs diretamente pelo ID
+    // Captura valores dos inputs (id email_input e senha_input)
     var emailVar = email_input.value;
     var senhaVar = senha_input.value;
 
@@ -88,7 +88,7 @@ function entrar() {
         return false;
     }
 
-    // 2. Validação básica de e-mail
+    // 2. Validação básica de e-mail (verifica presença de '@' e '.com')
     if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1) {
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "E-mail inválido! Deve conter '@' e '.com'.";
@@ -98,7 +98,7 @@ function entrar() {
     // Esconde o erro se estiver tudo certo
     cardErro.style.display = "none";
 
-    // Envio para a autenticação
+    // Envio para a autenticação via endpoint /usuarios/autenticar
     fetch("/usuarios/autenticar", {
         method: "POST",
         headers: {

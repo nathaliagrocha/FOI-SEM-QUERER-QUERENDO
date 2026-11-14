@@ -1,5 +1,7 @@
 var aquarioModel = require("../models/aquarioModel");
 
+// Controller: buscarAquariosPorEmpresa
+// Retorna os aquários associados a uma empresa/usuário (id em params)
 function buscarAquariosPorEmpresa(req, res) {
   var idUsuario = req.params.idUsuario;
 
@@ -17,6 +19,8 @@ function buscarAquariosPorEmpresa(req, res) {
 }
 
 
+// Controller: cadastrar
+// Valida campos e cria um novo aquário ligado a uma empresa
 function cadastrar(req, res) {
   var descricao = req.body.descricao;
   var idUsuario = req.body.idUsuario;

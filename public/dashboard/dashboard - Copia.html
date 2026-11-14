@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <link rel="shortcut icon" href="../assets/icon/favicon2.ico" type="image/x-icon">
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chaves | Painel Administrador</title>
+
+    <link rel="stylesheet" href="./../css/quiz.css">
+    <script src="../js/sessao.js"></script>
+    <script src="../js/alerta.js"></script>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Bangers&family=Barlow:wght@400;600;700&display=swap"
+        rel="stylesheet">
+
+    <!--FONT AWESOME-->
+    <script src="https://kit.fontawesome.com/9f7414eb10.js" crossorigin="anonymous"></script>
+    <!--Adicionando a biblioteca chart.js-->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+
+    <div class="janela">
+        <!-- Navbar Lateral com Fundo de Tijolinhos -->
+        <div class="header-left">
+            <h1>Chaves</h1>
+
+            <div class="hello">
+                <h3 style="color: #ffcc00; font-weight: 600;">Admin: <span id="b_usuario">Gerente</span></h3>
+            </div>
+
+            <div class="btn-nav-white">
+                <a href="./indehtml">
+                    <h3>Episódios</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="./index.html" style="color: white; text-decoration: none;">
+                    <h3>Quiz</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()">
+                <h3>Sair</h3>
+            </div>
+        </div>
+
+
+<div class="conteudo-direita">
+    <div class="titulo">
+    <h2>Controle sobre usuários e suas atividades</h2>
+    </div>
+
+
+    <!-- Primeira parte -->
+    <div class="secao-kpi">
+
+        <div class="kpi">
+            <h3>Pontução total</h3>
+            <p>250</p>
+        </div>
+
+        <div class="kpi">
+            <h3>Total de acertos</h3>
+            <p>40</p>
+        </div>
+
+        <div class="kpi">
+            <h3>Aproveitamento geral</h3>
+            <p>85%</p>
+        </div>
+
+        <div class="kpi">
+            <h3>Quiz realizados</h3>
+            <p>4</p>
+        </div>
+    </div>
+
+
+    <div class="podio-container">
+        <!-- 2º Lugar fica à esquerda -->
+        <div class="coluna segundo">
+            <div class="nome">Jogador 2</div>
+            <div class="bloco">2</div>
+        </div>
+
+        <!-- 1º Lugar fica no centro -->
+        <div class="coluna primeiro">
+            <div class="nome">Jogador 1</div>
+            <div class="bloco">1</div>
+        </div>
+
+        <!-- 3º Lugar fica à direita -->
+        <div class="coluna terceiro">
+            <div class="nome">Jogador 3</div>
+            <div class="bloco">3</div>
+        </div>
+    </div>
+    <hr>
+    <div class="graficos">
+        <div class="graficoBar">
+            <canvas id="graficoBar"></canvas>
+        </div>
+
+         <div class="graficoPiz">
+            <canvas id="graficoPizza"></canvas>
+        </div>
+        </div>
+
+    <hr>
+
+
+
+</div>
+</body>
+
+</html>
+
+<script>
+    // Script do dashboard: cria gráficos com Chart.js
+    src = "script.js"
+    // Seleciona o canvas onde o gráfico de barras será desenhado
+    const graficoBar = document.getElementById("graficoBar");
+
+    new Chart(graficoBar, {
+        type: "bar",
+
+        data: {
+            labels: ["Semana 1", "Semana 2", "Semana 3", "Semana 4"],
+
+            datasets: [
+                {
+                    label: "Usuarios cadastrados desde a abertura",
+                    data: [5, 15, 25, 40],
+                    borderColor: "green",
+                    backgroundColor: "green"
+
+                }
+            ]
+        }
+    });
+
+
+    // Seleciona o canvas onde o gráfico de pizza será desenhado
+    const graficoPizza = document.getElementById("graficoPizza");
+
+    new Chart(graficoPizza, {
+        type: "pie",
+
+        data: {
+            labels: ["Acertaram todas", "Acertaram mais da metade", "Acertaram menos da metade"],
+
+            datasets: [{
+                data: [40, 30, 30],
+
+                backgroundColor: [
+                    "green",
+                    "orange",
+                    "red"
+                ]
+            }]
+        }
+    });
+
+    
+
+</script>

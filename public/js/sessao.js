@@ -1,4 +1,6 @@
-// sessão
+// Função validarSessao
+// Verifica se existem dados de sessão (nome e email). Se existirem, atualiza o botão do usuário.
+// Caso contrário, redireciona para a página de login.
 function validarSessao() {
     var email = sessionStorage.EMAIL_USUARIO;
     var nome = sessionStorage.NOME_USUARIO;
@@ -12,17 +14,22 @@ function validarSessao() {
     }
 }
 
+// Função limparSessao
+// Limpa todos os dados da sessionStorage e redireciona para o login
 function limparSessao() {
     sessionStorage.clear();
     window.location = "../login.html";
 }
 
-// carregamento (loading)
+// Função aguardar
+// Mostra a tela/elemento de carregamento (div_aguardar)
 function aguardar() {
     var divAguardar = document.getElementById("div_aguardar");
     divAguardar.style.display = "flex";
 }
 
+// Função finalizarAguardar
+// Esconde o carregamento e opcionalmente mostra uma mensagem de erro
 function finalizarAguardar(texto) {
     var divAguardar = document.getElementById("div_aguardar");
     divAguardar.style.display = "none";
