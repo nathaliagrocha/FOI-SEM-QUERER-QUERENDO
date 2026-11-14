@@ -53,7 +53,7 @@
 
 <div class="conteudo-direita">
     <div class="titulo">
-    <h2>Controle sobre usuários e suas atividades</h2>
+    <h2>Meu desempenho nos quizzes.</h2>
     </div>
 
 
@@ -61,7 +61,7 @@
     <div class="secao-kpi">
 
         <div class="kpi">
-            <h3>Pontução total</h3>
+            <h3>Pontuação total.</h3>
             <p>250</p>
         </div>
 
@@ -71,18 +71,22 @@
         </div>
 
         <div class="kpi">
-            <h3>Aproveitamento geral</h3>
+            <h3>Porcentagem geral de acertos</h3>
             <p>85%</p>
         </div>
 
         <div class="kpi">
-            <h3>Quiz realizados</h3>
+            <h3>Quizzes concluídos.</h3>
             <p>4</p>
         </div>
     </div>
 
 
     <div class="podio-container">
+
+        <div class="titulo-podio">
+            <p>Pódio da Vila</p>
+        </div>
         <!-- 2º Lugar fica à esquerda -->
         <div class="coluna segundo">
             <div class="nome">Jogador 2</div>
@@ -100,15 +104,27 @@
             <div class="nome">Jogador 3</div>
             <div class="bloco">3</div>
         </div>
+        <div class="posicao podio">
+
+        </div>
     </div>
     <hr>
     <div class="graficos">
         <div class="graficoBar">
+            <div>
+                <p>Minha evolução nas tentativas.</p>
+            </div>
             <canvas id="graficoBar"></canvas>
         </div>
 
          <div class="graficoPiz">
+            <p>Distribuição de acertos e erros.</p>
             <canvas id="graficoPizza"></canvas>
+        </div>
+
+        <div class="graficoLine">
+            <p>Meu desempenho por quiz.</p>
+            <canvas id="graficoLinha"></canvas>
         </div>
         </div>
 
@@ -131,12 +147,12 @@
         type: "bar",
 
         data: {
-            labels: ["Semana 1", "Semana 2", "Semana 3", "Semana 4"],
+            labels: ["quiz 1", "quiz 2", "quiz 3"],
 
             datasets: [
                 {
-                    label: "Usuarios cadastrados desde a abertura",
-                    data: [5, 15, 25, 40],
+                    label: "Desempenho por quiz",
+                    data: [5, 15, 25],
                     borderColor: "green",
                     backgroundColor: "green"
 
@@ -150,20 +166,40 @@
     const graficoPizza = document.getElementById("graficoPizza");
 
     new Chart(graficoPizza, {
-        type: "pie",
+        type: "doughnut",
 
         data: {
-            labels: ["Acertaram todas", "Acertaram mais da metade", "Acertaram menos da metade"],
+            labels: ["Acertos", "Erros"],
 
             datasets: [{
-                data: [40, 30, 30],
+                data: [80, 30],
 
                 backgroundColor: [
                     "green",
-                    "orange",
-                    "red"
+                    "orange"
                 ]
             }]
+        }
+    });
+
+    // Seleciona o canvas onde o gráfico de barras será desenhado
+    const graficoLinha = document.getElementById("graficoLinha");
+
+    new Chart(graficoLinha, {
+        type: "line",
+
+        data: {
+            labels: ["Tentativa 1", "Tentativa 2", "Tentativa 3", "Tentativa 4","Tentativa 5"],
+
+            datasets: [
+                {
+                    label: "Evolução de pontuação",
+                    data: [5, 15, 25, 40,60],
+                    borderColor: "green",
+                    backgroundColor: "green"
+
+                }
+            ]
         }
     });
 
