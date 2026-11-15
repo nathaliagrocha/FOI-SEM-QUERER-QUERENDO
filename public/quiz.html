@@ -6,12 +6,41 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Exemplo - Quiz</title>
     <link rel="stylesheet" href="css/quiz.css">
+    <!-- Carrega as funções de sessão (validarSessao, limparSessao, etc.) -->
+    <script src="js/sessao.js"></script>
 </head>
 
 
 <body onload="onloadEsconder()">
-    
-    
+    <div class="janela">
+        <!-- Navbar Lateral com Fundo de Tijolinhos -->
+        <div class="header-left">
+            <a href="dashboard/boas_vindas.html">
+                <img src="assets/chaves_logo.png" alt="Chaves" style="width: 300px; height: auto;">
+            </a>
+
+            <div class="hello">
+                <h3 style="color: #ffcc00; font-weight: 600;">Olá, <span id="b_usuario">Gerente</span></h3>
+            </div>
+
+            <div class="btn-nav">
+                <a href="dashboard/dashboardCopia.html" style="color: white; text-decoration: none;">
+                    <h3>Dashboard</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="quiz.html" style="color: white; text-decoration: none;">
+                    <h3>Quiz</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()"><a href="login.html">
+                <h3>Sair</h3>
+                </a>
+            </div>
+        </div>
+
         <!-- 👇 ÁREA AO LADO DA NAVBAR: FOTO DE FUNDO + QUIZ CENTRALIZADO -->
         <div class="conteudo-direita">
             <div id="pontuacaoEJogo">
@@ -81,6 +110,18 @@
 
 </html>
 <script>
+    // Protege a tela de quiz: se não houver sessão válida,
+    // validarSessao() (de js/sessao.js) redireciona para ../login.html.
+    validarSessao();
+
+    // Se o navegador restaurar esta página pelo botão "Voltar",
+    // valida a sessão de novo (ex.: depois de sair).
+    window.addEventListener("pageshow", function (evento) {
+        if (evento.persisted) {
+            validarSessao();
+        }
+    });
+
     const listaDeQuestoes = [
 
         {
