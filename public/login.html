@@ -78,7 +78,7 @@
 <script>
 function entrar() {
     // Captura valores dos inputs (id email_input e senha_input)
-    var emailVar = email_input.value;
+    var emailVar = email_input.value.trim();
     var senhaVar = senha_input.value;
 
     // 1. Verificar se os campos estão preenchidos
@@ -111,13 +111,14 @@ function entrar() {
     }).then(function (resposta) {
         if (resposta.ok) {
             resposta.json().then(json => {
-                console.log(json);
-                
-                localStorage.EMAIL_USUARIO = json.email;
-                localStorage.NOME_USUARIO = json.nome;
-                localStorage.ID_USUARIO = json.id;
+                // Guarda os dados da sessão apenas nesta aba do navegador.
+                // O token é o que o servidor usa para reconhecer o usuário.
+                sessionStorage.setItem("TOKEN_USUARIO", json.token);
+                sessionStorage.setItem("EMAIL_USUARIO", json.email);
+                sessionStorage.setItem("NOME_USUARIO", json.nome);
+                sessionStorage.setItem("ID_USUARIO", json.id);
 
-                location.href = "dashboard/mural.html";
+                location.href = "dashboard/dashboardCopia.html";
             });
         } else {
             cardErro.style.display = "block";

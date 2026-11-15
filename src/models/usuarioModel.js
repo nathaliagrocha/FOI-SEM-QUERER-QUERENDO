@@ -1,27 +1,23 @@
 var database = require("../database/config")
 
 // Model: autenticar
-// Monta e executa a query que busca usuário por email e senha
+// Busca o usuário por email e senha usando parâmetros (?) para evitar SQL Injection.
+// O BINARY faz a senha ser comparada exatamente, diferenciando maiúsculas de minúsculas.
+// A senha nunca é registrada no console.
 function autenticar(email, senha) {
-    console.log("ACESSEI O USUARIO MODEL - autenticar\n\n Se ocorrer 'Error: connect ECONNREFUSED', verifique o DB e credenciais.");
     var instrucaoSql = `
-        SELECT id, nome, email FROM usuario WHERE email = '${email}' AND senha = '${senha}';
+        SELECT id, nome, email FROM usuario WHERE email = ? AND senha = BINARY ?;
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [email, senha]);
 }
 
 // Model: cadastrar
-// Monta e executa a query para inserir um novo usuário na tabela 'usuario'
+// Insere um novo usuário na tabela 'usuario' usando parâmetros (?) para evitar SQL Injection.
 function cadastrar(nome, email, senha) {
-    console.log("ACESSEI O USUARIO MODEL - cadastrar\n\n Se ocorrer 'Error: connect ECONNREFUSED', verifique o DB e credenciais.");
-    
-    // Query de inserção usando valores recebidos (atenção à SQL injection em ambientes reais)
     var instrucaoSql = `
-        INSERT INTO usuario (nome, email, senha) VALUES ('${nome}', '${email}', '${senha}');
+        INSERT INTO usuario (nome, email, senha) VALUES (?, ?, ?);
     `;
-    console.log("Executando a instrução SQL: \n" + instrucaoSql);
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [nome, email, senha]);
 }
 
 module.exports = {

@@ -7,7 +7,7 @@ CREATE TABLE usuario(
 id INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
 email VARCHAR (100),
-senha INT 
+senha VARCHAR(255)
 );
 
 -- TABELA QUE ARMAZENA A QUANTIDADE DE ACERTOS QUE TEVE POR QUESTÃO, O TOTAL DE ACERTOS EM TODO QUIZ E A QUANTIDADE DE VEZES QUE O QUIZ FOI REALIZADO
@@ -21,5 +21,5 @@ FOREIGN KEY (fk_usuario) REFERENCES usuario (id)
 );
 
 -- Observações:
--- senha está definida como INT no script original; normalmente deveria ser VARCHAR (hash) para suportar textos
--- Caso prefira, altere para VARCHAR(255) e armazene hashes seguros em produção.
+-- senha é VARCHAR(255) para permitir textos maiores.
+-- Recomendação para a próxima etapa: guardar um hash da senha (nunca a senha em texto puro) e usar uma biblioteca própria para isso.
