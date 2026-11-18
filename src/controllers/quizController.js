@@ -87,7 +87,27 @@ function buscarDesempenho(req, res) {
         });
 }
 
+// Controller: buscarRanking
+// Busca o ranking de usuarios com melhor desempenho nos quizzes (top 3).
+function buscarRanking(req, res) {
+    var token = req.headers["x-access-token"];
+    var usuario = usuarioController.obterUsuarioPorToken(token);
+
+    if (usuario == null) {
+        res.status(401).send("Sessão inválida. Faça login novamente.");
+        return;
+    }
+
+    quizModel.buscarRanking().then(function (resultado) {
+        res.status(200).json(resultado);
+    }).catch(function (erro) {
+        console.log("Erro ao buscar o ranking: ", erro.message);
+        res.status(500).send("Erro interno ao buscar o ranking.");
+    });
+}
+
 module.exports = {
     salvar_resultado,
-    buscarDesempenho
+    buscarDesempenho,
+    buscarRanking
 };

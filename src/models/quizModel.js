@@ -47,8 +47,27 @@ function buscarDesempenho(id_usuario) {
     return database.executar(instrucaoSql, [id_usuario]);
 }
 
+// Model: buscarRanking
+// Busca o ranking de usuarios com melhor desempenho nos quizzes (top 3).
+function buscarRanking() {
+    var instrucaoSql = `
+        SELECT
+            u.id AS idUsuario,
+            u.nome AS nomeUsuario,
+            ROUND(AVG(t.pontuacao), 2) AS media_pontuacao,
+            SUM(t.acertos) AS total_acertos
+        FROM tentativa_quiz t
+        INNER JOIN usuario u ON t.id_usuario = u.id
+        GROUP BY u.id, u.nome
+        ORDER BY media_pontuacao DESC, total_acertos DESC
+        LIMIT 3;
+    `;
+    return database.executar(instrucaoSql);
+}
+
 module.exports = {
     salvar_resultado,
     buscarPorId,
-    buscarDesempenho
+    buscarDesempenho,
+    buscarRanking
 };

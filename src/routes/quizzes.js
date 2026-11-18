@@ -9,6 +9,12 @@ router.get("/desempenho", function (req, res) {
     quizController.buscarDesempenho(req, res);
 });
 
+// Rota GET /quizzes/ranking
+// Retorna o ranking de usuarios com melhor desempenho nos quizzes (top 3).
+router.get("/ranking", function (req, res) {
+    quizController.buscarRanking(req, res);
+});
+
 // Rota POST /quizzes/resultado
 // Recebe o número do quiz e a quantidade de acertos.
 // O usuário é identificado pelo token enviado no cabeçalho x-access-token.
