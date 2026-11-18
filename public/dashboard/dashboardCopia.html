@@ -188,6 +188,118 @@
     // Atualiza os valores das KPIs com os dados do backend.
     buscarDesempenho();
 
+    // Formata o número com virgula decimal (ex.: 80.64 vira 80,64).
+    function formatarNumero(valor) {
+        return valor.toString().replace(".", ",");
+    }
+
+    // Script do dashboard: busca o ranking de usuarios com melhor desempenho nos quizzes.
+    function buscarRanking() {
+        var token = obterTokenSessao();
+
+        if (token == null) {
+            return;
+        }
+
+        fetch("/quizzes/ranking", {
+            method: "GET",
+            headers: {
+                "x-access-token": token
+            }
+        }).then(function (resposta) {
+            if (!resposta.ok) {
+                return;
+            }
+
+            return resposta.json().then(function (dados) {
+                renderizarPodio(dados);
+            });
+        }).catch(function (erro) {
+            console.log("#ERRO ao buscar o ranking: " + erro);
+        });
+    }
+
+    // Preenche o podio com o ranking e mostra a posicao do usuario logado.
+    function renderizarPodio(ranking) {
+        var lista = Array.isArray(ranking) ? ranking : [];
+
+        // Limpa as colunas do podio antes de preencher com os novos dados.
+        limparColunasDoPodio();
+
+        // Preenche as colunas com os tres primeiros colocados do ranking.
+        for (var i = 0; i < lista.length && i < 3; i++) {
+            var lugar = i + 1;
+            var classe = lugar == 1 ? "primeiro" : lugar == 2 ? "segundo" : "terceiro";
+            var coluna = document.querySelector(".coluna." + classe);
+
+            if (coluna == null) {
+                continue;
+            }
+
+            var nome = coluna.querySelector(".nome");
+            var bloco = coluna.querySelector(".bloco");
+
+            if (lista[i] != null) {
+                nome.innerHTML = lista[i].nome;
+                bloco.innerHTML = formatarNumero(Number(lista[i].media_pontuacao) || 0);
+            }
+        }
+
+        // Mostra a posicao do usuario logado no ranking.
+        var posicaoEl = document.querySelector(".posicao.podio");
+        var mensagemEl = document.querySelector(".posicao.podio p");
+
+        if (posicaoEl != null) {
+            if (lista.length == 0) {
+                if (mensagemEl != null) {
+                    mensagemEl.innerHTML = "O ranking ainda não possui participantes.";
+                }
+                return;
+            }
+
+            var idUsuarioLogado = obterIdUsuario();
+            var usuarioLogado = null;
+            var lugarLogado = 0;
+
+            for (var i = 0; i < lista.length; i++) {
+                if (Number(lista[i].idUsuario) == idUsuarioLogado) {
+                    usuarioLogado = lista[i];
+                    lugarLogado = i + 1;
+                    break;
+                }
+            }
+
+            if (mensagemEl != null) {
+                if (usuarioLogado != null) {
+                    mensagemEl.innerHTML = "Sua posição é " + lugarLogado + "º com " + formatarNumero(Number(usuarioLogado.media_pontuacao) || 0) + " pontos";
+                } else {
+                    mensagemEl.innerHTML = "Você não está entre os três primeiros.";
+                }
+            }
+        }
+    }
+
+    // Limpa os nomes e as barras do podio.
+    function limparColunasDoPodio() {
+        var colunas = document.querySelectorAll(".podio-container .coluna");
+
+        for (var i = 0; i < colunas.length; i++) {
+            var nome = colunas[i].querySelector(".nome");
+            var bloco = colunas[i].querySelector(".bloco");
+
+            if (nome != null) {
+                nome.innerHTML = "";
+            }
+
+            if (bloco != null) {
+                bloco.innerHTML = "";
+            }
+        }
+    }
+
+    // Atualiza o ranking com os dados do backend.
+    buscarRanking();
+
     // Script do dashboard: cria gráficos com Chart.js
     src = "script.js"
     // Seleciona o canvas onde o gráfico de barras será desenhado
