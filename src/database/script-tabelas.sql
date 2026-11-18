@@ -25,6 +25,8 @@ CREATE TABLE tentativa_quiz (
     total_questoes INT NOT NULL,
     pontuacao DECIMAL(8,2) NOT NULL,
 
+    data_realizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+
     FOREIGN KEY (id_usuario) REFERENCES usuario(id),
     FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz)
 );
