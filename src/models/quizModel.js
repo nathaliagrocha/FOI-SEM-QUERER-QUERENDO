@@ -42,7 +42,7 @@ function buscarDesempenho(id_usuario) {
             END AS percentual_geral,
             COUNT(*) AS quizzes_concluidos
         FROM tentativa_quiz
-        WHERE fk_usuario = ?;
+        WHERE id_usuario = ?;
     `;
     return database.executar(instrucaoSql, [id_usuario]);
 }
