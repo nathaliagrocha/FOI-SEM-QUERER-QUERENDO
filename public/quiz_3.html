@@ -3,13 +3,220 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="refresh" content="0; url=selecao_quiz.html">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Quiz - Chaves</title>
-    <script>window.location.replace("selecao_quiz.html");</script>
+    <link rel="stylesheet" href="css/quiz.css">
+    <!-- Carrega as funções de sessão (validarSessao, limparSessao, etc.) -->
+    <script src="js/sessao.js"></script>
 </head>
 
-<body>
-    <p>Redirecionando para o quiz... <a href="selecao_quiz.html">Clique aqui</a>.</p>
+<body onload="iniciar_quiz(3)">
+    <div class="janela">
+        <!-- Navbar Lateral com Fundo de Tijolinhos -->
+        <div class="header-left">
+            <a href="dashboard/boas_vindas.html">
+                <img src="assets/chaves_logo.png" alt="Chaves" style="width: 300px; height: auto;">
+            </a>
+
+            <div class="hello">
+                <h3 style="color: #ffcc00; font-weight: 600;">Olá, <span id="b_usuario">Gerente</span></h3>
+            </div>
+
+            <div class="btn-nav">
+                <a href="dashboard/dashboardCopia.html" style="color: white; text-decoration: none;">
+                    <h3>Dashboard</h3>
+                </a>
+            </div>
+
+            <div class="btn-nav">
+                <a href="selecao_quiz.html" style="color: white; text-decoration: none;">
+                    <h3>Quiz</h3>
+                </a>
+            </div>
+
+            <div class="btn-logout" onclick="limparSessao()"><a href="login.html">
+                <h3>Sair</h3>
+            </a></div>
+        </div>
+
+        <!-- ÁREA AO LADO DA NAVBAR -->
+        <div class="selecao_conteudo">
+            <button type="button" class="btn-voltar-quiz" onclick="voltar_para_selecao()">Voltar para os quizzes</button>
+
+            <div id="pontuacaoEJogo">
+                <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
+                    <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
+                        <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
+                        <span class="width-fit-content">Quantidade de erros: <span id="spanErradas"></span></span>
+                    </div>
+                    <div id="pontuacaoFinalJogo" class="flex-colunar padding-8">
+                        <span id="pontuacaoFinal" class="width-fit-content">Pontuação Final:
+                            <span id="spanPontuacaoFinal">***</span>
+                        </span>
+                        <span id="msgFinal" class="width-fit-content">***</span>
+                    </div>
+                </div>
+
+                <div id="jogo" class="width-fit-content flex-colunar border-secondary">
+
+                    <div id="infoQuestao" class="padding-8">
+                        <span>Questão atual: <span id="spanNumeroDaQuestaoAtual"></span> de <span id="qtdQuestoes"></span>
+                            questões.</span>
+                    </div>
+
+                    <div id="perguntaDaQuestaoAtual" class="padding-8">
+                        <span id="spanQuestaoExibida" class="text-bold"></span>
+                    </div>
+
+                    <div id="infoAlternativas" class="padding-8">
+                        <span><em>Escolha uma opção dentre as abaixo:</em></span>
+                    </div>
+
+                    <div id="opcoes" class="flex-colunar padding-8">
+                        <span>
+                            <input type="radio" id="primeiraOpcao" name="option" class="radio" value="alternativaA" />
+                            <label for="primeiraOpcao" class="option" id="labelOpcaoUm"></label>
+                        </span>
+                        <span>
+                            <input type="radio" id="segundaOpcao" name="option" class="radio" value="alternativaB" />
+                            <label for="segundaOpcao" class="option" id="labelOpcaoDois"></label>
+                        </span>
+                        <span>
+                            <input type="radio" id="terceiraOpcao" name="option" class="radio" value="alternativaC" />
+                            <label for="terceiraOpcao" class="option" id="labelOpcaoTres"></label>
+                        </span>
+                        <span>
+                            <input type="radio" id="quartaOpcao" name="option" class="radio" value="alternativaD" />
+                            <label for="quartaOpcao" class="option" id="labelOpcaoQuatro"></label>
+                        </span>
+                    </div>
+
+                    <div id="botoes" class="flex-colunar padding-8">
+                        <button onclick="submeter()" id="btnSubmeter">Submeter resposta</button>
+                        <button onclick="avancar()" id="btnProx" disabled>Avançar para próxima questão</button>
+                        <button onclick="tentarNovamente()" id="btnTentarNovamente" disabled>Tentar novamente</button>
+                    </div>
+
+                </div>
+            </div>
+
+            <div id="tela_resultado" class="resultado_quiz">
+                <h2>Quiz finalizado com sucesso!</h2>
+                <p>Sua pontuação foi de <span id="spanResultadoPontuacao">0</span> pontos.</p>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const listaDeQuestoes = [
+        {
+                pergunta: "De onde surgiu o apelido “Chespirito”, utilizado por Roberto Gómez Bolaños?",
+                alternativaA: "Era uma homenagem ao seu primeiro personagem.",
+                alternativaB: "Era uma adaptação diminutiva do sobrenome Shakespeare.",
+                alternativaC: "Era o nome de um personagem que ele criou na infância.",
+                alternativaD: "Era uma referência ao nome de seu primeiro programa.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "Qual curso Roberto Gómez Bolaños chegou a cursar antes de trabalhar com televisão e humor?",
+                alternativaA: "Jornalismo.",
+                alternativaB: "Direito.",
+                alternativaC: "Engenharia.",
+                alternativaD: "Medicina.",
+                alternativaCorreta: "alternativaC"
+        },
+        {
+                pergunta: "Por que o título original da série era “El Chavo del Ocho”?",
+                alternativaA: "Porque Chaves tinha oito anos.",
+                alternativaB: "Porque o programa era exibido pelo Canal 8.",
+                alternativaC: "Porque o personagem morava originalmente no apartamento 8.",
+                alternativaD: "Porque havia oito personagens principais.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "Qual personagem era conhecido por sempre tentar evitar a fadiga?",
+                alternativaA: "Seu Madruga.",
+                alternativaB: "Jaiminho.",
+                alternativaC: "Professor Girafales.",
+                alternativaD: "Sr. Barriga.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "Qual personagem foi criado pelo próprio ator Edgar Vivar?",
+                alternativaA: "Godinez.",
+                alternativaB: "Nhonho.",
+                alternativaC: "Jaiminho.",
+                alternativaD: "Seu Furtado.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "Qual é a curiosidade por trás dos sapatos usados pelo Chaves na série?",
+                alternativaA: "Foram comprados por Seu Madruga em uma loja de usados.",
+                alternativaB: "Foram dados por Chiquinha quando Chaves chegou à vizinhança pela primeira vez.",
+                alternativaC: "Pertenciam originalmente ao Professor Girafales.",
+                alternativaD: "Foram um presente de aniversário de Dona Florinda.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "O que aconteceu com a personagem Chiquinha em determinado período de 1974, fazendo com que ela se afastasse das gravações?",
+                alternativaA: "A atriz precisou viajar para outro país.",
+                alternativaB: "A atriz estava grávida.",
+                alternativaC: "A personagem foi retirada por uma mudança no roteiro.",
+                alternativaD: "A atriz sofreu um acidente durante as gravações.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "Em que ano aconteceu a última participação de Quico na série clássica?",
+                alternativaA: "1976.",
+                alternativaB: "1977.",
+                alternativaC: "1978.",
+                alternativaD: "1979.",
+                alternativaCorreta: "alternativaC"
+        },
+        {
+                pergunta: "Antes de ganhar um programa próprio, Chaves era um quadro dentro de qual atração comandada por Roberto Gómez Bolaños?",
+                alternativaA: "El Chapulín Colorado.",
+                alternativaB: "Los Supergenios de la Mesa Cuadrada.",
+                alternativaC: "Chespirito.",
+                alternativaD: "La Chicharra.",
+                alternativaCorreta: "alternativaC"
+        },
+        {
+                pergunta: "Qual detalhe dos óculos de Chiquinha é uma curiosidade sobre a produção da série?",
+                alternativaA: "Eram feitos com lentes de aumento.",
+                alternativaB: "Na maioria dos episódios, não possuíam lentes.",
+                alternativaC: "Eram pintados para combinar com o vestido.",
+                alternativaD: "Tinham lentes que mudavam de cor.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "Em que ano Chaves estreou na televisão mexicana?",
+                alternativaA: "1969.",
+                alternativaB: "1970.",
+                alternativaC: "1971.",
+                alternativaD: "1973.",
+                alternativaCorreta: "alternativaC"
+        },
+        {
+                pergunta: "Qual episódio é conhecido por reunir praticamente todo o elenco principal da série?",
+                alternativaA: "A venda da vila.",
+                alternativaB: "O Festival da Boa Vizinhança.",
+                alternativaC: "A viagem a Acapulco.",
+                alternativaD: "O restaurante de Dona Florinda.",
+                alternativaCorreta: "alternativaB"
+        },
+        {
+                pergunta: "Qual era o nome da cidade mexicana de onde vinha Jaiminho, o Carteiro?",
+                alternativaA: "Cancún.",
+                alternativaB: "Tangamandápio.",
+                alternativaC: "Acapulco.",
+                alternativaD: "Guadalajara.",
+                alternativaCorreta: "alternativaB"
+        }
+];
+    </script>
+
+    <script src="js/quiz.js"></script>
 </body>
 
 </html>
