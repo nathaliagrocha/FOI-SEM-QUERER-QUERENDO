@@ -57,6 +57,37 @@ function salvar_resultado(req, res) {
         });
 }
 
+// Controller: buscarDesempenho
+// Identifica o usuário pelo token da sessão e busca o resumo de desempenho
+// usado nas KPIs da dashboard (pontuação total, acertos, porcentagem e quizzes).
+function buscarDesempenho(req, res) {
+    var token = req.headers["x-access-token"];
+    var usuario = usuarioController.obterUsuarioPorToken(token);
+
+    if (usuario == null) {
+        res.status(401).send("Sessão inválida. Faça login novamente.");
+        return;
+    }
+
+    quizModel.buscarDesempenho(usuario.id)
+        .then(function (resultado) {
+            var desempenho = resultado[0] || {};
+
+            // Converte os valores para número e usa zero quando não houver tentativas.
+            res.status(200).json({
+                pontuacao_total: Number(desempenho.pontuacao_total) || 0,
+                total_de_acertos: Number(desempenho.total_de_acertos) || 0,
+                percentual_geral: Number(desempenho.percentual_geral) || 0,
+                quizzes_concluidos: Number(desempenho.quizzes_concluidos) || 0
+            });
+        })
+        .catch(function (erro) {
+            console.log("Erro ao buscar o desempenho do usuário: ", erro.message);
+            res.status(500).send("Erro interno ao buscar o desempenho.");
+        });
+}
+
 module.exports = {
-    salvar_resultado
+    salvar_resultado,
+    buscarDesempenho
 };

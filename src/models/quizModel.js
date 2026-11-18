@@ -28,7 +28,27 @@ function buscarPorId(id_quiz) {
     return database.executar(instrucaoSql, [id_quiz]);
 }
 
+// Model: buscarDesempenho
+// Busca o resumo de desempenho do usuário nos quizzes (usado nas KPIs da dashboard).
+// Soma as tentativas do usuário na tabela 'tentativa_quiz'.
+function buscarDesempenho(id_usuario) {
+    var instrucaoSql = `
+        SELECT
+            COALESCE(SUM(pontuacao), 0) AS pontuacao_total,
+            COALESCE(SUM(acertos), 0) AS total_de_acertos,
+            CASE
+                WHEN SUM(total_questoes) > 0 THEN ROUND(SUM(acertos) / SUM(total_questoes) * 100, 2)
+                ELSE 0
+            END AS percentual_geral,
+            COUNT(*) AS quizzes_concluidos
+        FROM tentativa_quiz
+        WHERE fk_usuario = ?;
+    `;
+    return database.executar(instrucaoSql, [id_usuario]);
+}
+
 module.exports = {
     salvar_resultado,
-    buscarPorId
+    buscarPorId,
+    buscarDesempenho
 };
