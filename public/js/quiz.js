@@ -1,6 +1,7 @@
 // Motor do quiz.
-// As perguntas dos três quizzes ficam em js/quiz_dados.js (objeto "quizzes").
-// A tela de seleção chama iniciar_quiz(numero_quiz) para começar um quiz ali mesmo.
+// Cada página do quiz (quiz.html, quiz_2.html, quiz_3.html) guarda as próprias
+// questões em uma constante "listaDeQuestoes" dentro do script da página.
+// A tela de seleção não tem mais o motor; ela só redireciona para a página de cada quiz.
 
 // Protege a tela: sem sessão válida, volta para o login.
 validarSessao();
@@ -20,10 +21,15 @@ let acertos = 0;
 let pontuacao_final = 0;
 let resultado_salvo = false;
 
-// Começa o quiz escolhido na tela de seleção.
+// Antes de começar, esconde a pontuação e o jogo.
+// O quiz começa automaticamente quando a página é aberta (body onload -> iniciar_quiz).
+document.getElementById("pontuacao").style.display = "none";
+document.getElementById("jogo").style.display = "none";
+
+// Começa o quiz da página atual. A lista de questões vem da constante da própria página.
 function iniciar_quiz(numero_quiz) {
     id_quiz_atual = numero_quiz;
-    lista_de_questoes = quizzes[numero_quiz];
+    lista_de_questoes = listaDeQuestoes;
 
     numero_da_questao_atual = 0;
     quantidade_de_questoes = lista_de_questoes.length;
@@ -31,12 +37,9 @@ function iniciar_quiz(numero_quiz) {
     pontuacao_final = 0;
     resultado_salvo = false;
 
-    document.getElementById("tela_selecao").style.display = "none";
-    document.getElementById("tela_quiz").style.display = "flex";
-
+    document.getElementById("tela_resultado").style.display = "none";
     document.getElementById("pontuacao").style.display = "flex";
     document.getElementById("jogo").style.display = "flex";
-    document.getElementById("tela_resultado").style.display = "none";
 
     document.getElementById("qtdQuestoes").innerHTML = quantidade_de_questoes;
 
@@ -53,8 +56,7 @@ function iniciar_quiz(numero_quiz) {
 
 // Volta para a tela com os três quizzes.
 function voltar_para_selecao() {
-    document.getElementById("tela_quiz").style.display = "none";
-    document.getElementById("tela_selecao").style.display = "flex";
+    window.location.href = "selecao_quiz.html";
 }
 
 function preencherHTMLcomQuestaoAtual(index) {
@@ -150,7 +152,6 @@ function desmarcarRadioButtons() {
 }
 
 // Calcula a pontuação de 0 a 100 de forma proporcional.
-// Vale tanto para o quiz de 20 questões quanto para o de 13.
 // O arredondamento para duas casas decimais é feito somente no final.
 function calcular_pontuacao() {
     return Math.round((acertos / quantidade_de_questoes) * 10000) / 100;
