@@ -15,11 +15,18 @@
     <style>
         /* Centraliza a frase de boas-vindas no espaço à direita da navbar */
         #boas_vindas {
-            grid-column: 1 / -1;
-            min-height: calc(100vh - 40px);
             display: flex;
             justify-content: center;
             align-items: center;
+        }
+        .conteudo-direita {
+            height: 100vh !important;
+            min-height: 100vh !important;
+            overflow: hidden !important;
+            display: flex !important;
+            justify-content: center !important;
+            align-items: center !important;
+            padding: 0 !important;
         }
 
         #boas_vindas h2 {

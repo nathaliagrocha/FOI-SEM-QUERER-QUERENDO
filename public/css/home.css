@@ -314,7 +314,6 @@ html, body {
     display: block;
     box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
-
 /* --- CONTAINER DAS SEÇÕES PADRÃO (Espaçamento maior entre elas) --- */
 .container-secoes-padrao {
     display: flex;
@@ -467,12 +466,10 @@ html, body {
     text-transform: uppercase;
     text-decoration: none;
     transition: background-color 0.3s ease, transform 0.2s ease;
-    box-shadow: 0 4px 15px rgba(255, 204, 0, 0.4);
 }
 
 .caixa-contorno .botao-acao:hover {
     background-color: #ffffff;
-    transform: translateY(-2px);
 }
 
 /* --- FOOTER COM ALTURA MAIOR --- */
