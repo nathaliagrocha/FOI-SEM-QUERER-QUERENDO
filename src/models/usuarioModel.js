@@ -2,11 +2,10 @@ var database = require("../database/config")
 
 // Model: autenticar
 // Busca o usuário por email e senha usando parâmetros (?) para evitar SQL Injection.
-// O BINARY faz a senha ser comparada exatamente, diferenciando maiúsculas de minúsculas.
 // A senha nunca é registrada no console.
 function autenticar(email, senha) {
     var instrucaoSql = `
-        SELECT id, nome, email FROM usuario WHERE email = ? AND senha = BINARY ?;
+        SELECT id, nome, email FROM usuario WHERE email = ? AND senha = ?;
     `;
     return database.executar(instrucaoSql, [email, senha]);
 }
