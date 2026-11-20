@@ -147,7 +147,6 @@ html, body {
 
 .botao-entrar:hover {
     background-color: #e6b800;
-    transform: translateY(-2px);
 }
 
 /* --- LADO DIREITO: DEGRADÊ E INFORMAÇÕES --- */
@@ -216,7 +215,6 @@ html, body {
 
 .botao-ir-cadastro:hover {
     background-color: rgba(0, 0, 0, 0.8);
-    transform: translateY(-2px);
 }
 
 /* Alerta de Erro */

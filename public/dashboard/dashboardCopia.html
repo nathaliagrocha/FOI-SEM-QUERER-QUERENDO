@@ -225,7 +225,7 @@
 
             if (lista[i] != null) {
                 nome.innerHTML = lista[i].nomeUsuario;
-                bloco.innerHTML = formatarNumero(Number(lista[i].media_pontuacao) || 0);
+                bloco.innerHTML = formatarNumero(Number(lista[i].pontuacao_total) || 0);
             }
         }
 
@@ -255,7 +255,7 @@
 
             if (mensagemEl != null) {
                 if (usuarioLogado != null) {
-                    mensagemEl.innerHTML = "Sua posição é " + lugarLogado + "º com " + formatarNumero(Number(usuarioLogado.media_pontuacao) || 0) + " pontos";
+                    mensagemEl.innerHTML = "Sua posição é " + lugarLogado + "º com " + formatarNumero(Number(usuarioLogado.pontuacao_total) || 0) + " pontos";
                 } else {
                     mensagemEl.innerHTML = "Você não está entre os três primeiros.";
                 }
