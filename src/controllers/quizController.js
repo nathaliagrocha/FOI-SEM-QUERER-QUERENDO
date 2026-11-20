@@ -107,8 +107,17 @@ function buscarRanking(req, res) {
 }
 
 // Controller: buscarMaiorPontuacao
+// Busca a maior pontuação do usuário logado em cada quiz realizado.
 function buscarMaiorPontuacao(req, res) {
-    quizModel.buscarMaiorPontuacaoPorQuiz().then(function (resultado) {
+    var idUsuario = Number(req.headers["x-user-id"]);
+    var usuario = usuarioController.obterUsuarioAutenticado(idUsuario);
+
+    if (usuario == null) {
+        res.status(401).send("Sessão inválida. Faça login novamente.");
+        return;
+    }
+
+    quizModel.buscarMaiorPontuacaoPorQuiz(usuario.id).then(function (resultado) {
         res.status(200).json(resultado);
     }).catch(function (erro) {
         console.log("Erro ao buscar maior pontuação por quiz: ", erro.message);

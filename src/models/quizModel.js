@@ -72,15 +72,16 @@ function buscarRanking() {
 }
 
 // Model: buscarMaiorPontuacaoPorQuiz
-function buscarMaiorPontuacaoPorQuiz() {
+// Busca a maior pontuação de cada quiz realizado pelo usuário informado.
+function buscarMaiorPontuacaoPorQuiz(id_usuario) {
     var instrucaoSql = `
-        SELECT q.id_quiz AS quiz_id, q.nome AS titulo, COALESCE(MAX(t.pontuacao),0) AS maior_pontuacao
+        SELECT q.id_quiz AS quiz_id, q.nome AS titulo, MAX(t.pontuacao) AS maior_pontuacao
         FROM quiz q
-        LEFT JOIN tentativa_quiz t ON t.id_quiz = q.id_quiz
+        INNER JOIN tentativa_quiz t ON t.id_quiz = q.id_quiz AND t.id_usuario = ?
         GROUP BY q.id_quiz, q.nome
         ORDER BY q.id_quiz;
     `;
-    return database.executar(instrucaoSql);
+    return database.executar(instrucaoSql, [id_usuario]);
 }
 
 // Model: buscarPosicaoUsuario
@@ -130,8 +131,7 @@ module.exports = {
     salvar_resultado,
     buscarPorId,
     buscarDesempenho,
-    buscarRanking
-    ,
+    buscarRanking,
     buscarMaiorPontuacaoPorQuiz,
     buscarPosicaoUsuario
 };
