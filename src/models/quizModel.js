@@ -48,16 +48,22 @@ function buscarDesempenho(id_usuario) {
 }
 
 // Model: buscarRanking
-// Busca o ranking de usuarios com melhor desempenho nos quizzes (top 3).
+// Busca o ranking de usuarios com a maior pontuacao em cada quiz (top 3).
+// Para cada usuario, considera apenas a maior pontuacao de cada quiz e soma esses valores.
 function buscarRanking() {
     var instrucaoSql = `
         SELECT
             u.id AS idUsuario,
             u.nome AS nomeUsuario,
-            ROUND(AVG(t.pontuacao), 2) AS media_pontuacao,
-            SUM(t.pontuacao) AS pontuacao_total
-        FROM tentativa_quiz t
-        INNER JOIN usuario u ON t.id_usuario = u.id
+            SUM(tentativas_melhores.maior_pontuacao) AS pontuacao_total
+        FROM (
+            SELECT
+                t.id_usuario,
+                MAX(t.pontuacao) AS maior_pontuacao
+            FROM tentativa_quiz t
+            GROUP BY t.id_usuario, t.id_quiz
+        ) AS tentativas_melhores
+        INNER JOIN usuario u ON tentativas_melhores.id_usuario = u.id
         GROUP BY u.id, u.nome
         ORDER BY pontuacao_total DESC
         LIMIT 3;
@@ -78,22 +84,46 @@ function buscarMaiorPontuacaoPorQuiz() {
 }
 
 // Model: buscarPosicaoUsuario
+// Busca a posicao do usuario no ranking, considerando apenas a maior pontuacao
+// de cada quiz como pontuacao final do usuario.
 function buscarPosicaoUsuario(id_usuario) {
     var instrucaoSql = `
-        SELECT posicao, pontuacao_total FROM (
-            SELECT u.id AS usuario_id, IFNULL(SUM(t.pontuacao),0) AS pontuacao_total,
-                (SELECT 1 + COUNT(*) FROM (
-                    SELECT u2.id, IFNULL(SUM(t2.pontuacao),0) AS pt FROM usuario u2
-                    LEFT JOIN tentativa_quiz t2 ON t2.id_usuario = u2.id
-                    GROUP BY u2.id
-                    HAVING pt > IFNULL(SUM(t.pontuacao),0)
-                ) AS s) AS posicao
-            FROM usuario u
-            LEFT JOIN tentativa_quiz t ON t.id_usuario = u.id
-            GROUP BY u.id
-        ) AS ranking WHERE usuario_id = ?;
+        SELECT
+            (
+                1 + (
+                    SELECT COUNT(*)
+                    FROM (
+                        SELECT u2.id AS id_usuario, SUM(m2.maior_pontuacao) AS total_pontuacao
+                        FROM (
+                            SELECT t.id_usuario, MAX(t.pontuacao) AS maior_pontuacao
+                            FROM tentativa_quiz t
+                            GROUP BY t.id_usuario, t.id_quiz
+                        ) m2
+                        INNER JOIN usuario u2 ON m2.id_usuario = u2.id
+                        GROUP BY u2.id, u2.nome
+                    ) AS todos
+                    WHERE todos.total_pontuacao > (
+                        SELECT SUM(m3.maior_pontuacao)
+                        FROM (
+                            SELECT t.id_usuario, MAX(t.pontuacao) AS maior_pontuacao
+                            FROM tentativa_quiz t
+                            WHERE t.id_usuario = ?
+                            GROUP BY t.id_usuario, t.id_quiz
+                        ) m3
+                    )
+                )
+            ) AS posicao,
+            (
+                SELECT SUM(m4.maior_pontuacao)
+                FROM (
+                    SELECT t.id_usuario, MAX(t.pontuacao) AS maior_pontuacao
+                    FROM tentativa_quiz t
+                    WHERE t.id_usuario = ?
+                    GROUP BY t.id_usuario, t.id_quiz
+                ) m4
+            ) AS pontuacao_total;
     `;
-    return database.executar(instrucaoSql, [id_usuario]);
+    return database.executar(instrucaoSql, [id_usuario, id_usuario]);
 }
 
 module.exports = {
