@@ -160,7 +160,6 @@
             }
 
             return resposta.json().then(function (dados) {
-                document.getElementById("pontuacao_total").innerHTML = dados.pontuacao_total;
                 document.getElementById("total_acertos").innerHTML = dados.total_de_acertos;
                 document.getElementById("percentual_acertos").innerHTML = dados.percentual_geral + "%";
                 document.getElementById("quizzes_concluidos").innerHTML = dados.quizzes_concluidos;
@@ -225,7 +224,7 @@
             var bloco = coluna.querySelector(".bloco");
 
             if (lista[i] != null) {
-                nome.innerHTML = lista[i].nome;
+                nome.innerHTML = lista[i].nomeUsuario;
                 bloco.innerHTML = formatarNumero(Number(lista[i].media_pontuacao) || 0);
             }
         }
