@@ -55,14 +55,45 @@ function buscarRanking() {
             u.id AS idUsuario,
             u.nome AS nomeUsuario,
             ROUND(AVG(t.pontuacao), 2) AS media_pontuacao,
-            SUM(t.acertos) AS total_acertos
+            SUM(t.pontuacao) AS pontuacao_total
         FROM tentativa_quiz t
         INNER JOIN usuario u ON t.id_usuario = u.id
         GROUP BY u.id, u.nome
-        ORDER BY media_pontuacao DESC, total_acertos DESC
+        ORDER BY pontuacao_total DESC
         LIMIT 3;
     `;
     return database.executar(instrucaoSql);
+}
+
+// Model: buscarMaiorPontuacaoPorQuiz
+function buscarMaiorPontuacaoPorQuiz() {
+    var instrucaoSql = `
+        SELECT q.id_quiz AS quiz_id, q.nome AS titulo, COALESCE(MAX(t.pontuacao),0) AS maior_pontuacao
+        FROM quiz q
+        LEFT JOIN tentativa_quiz t ON t.id_quiz = q.id_quiz
+        GROUP BY q.id_quiz, q.nome
+        ORDER BY q.id_quiz;
+    `;
+    return database.executar(instrucaoSql);
+}
+
+// Model: buscarPosicaoUsuario
+function buscarPosicaoUsuario(id_usuario) {
+    var instrucaoSql = `
+        SELECT posicao, pontuacao_total FROM (
+            SELECT u.id AS usuario_id, IFNULL(SUM(t.pontuacao),0) AS pontuacao_total,
+                (SELECT 1 + COUNT(*) FROM (
+                    SELECT u2.id, IFNULL(SUM(t2.pontuacao),0) AS pt FROM usuario u2
+                    LEFT JOIN tentativa_quiz t2 ON t2.id_usuario = u2.id
+                    GROUP BY u2.id
+                    HAVING pt > IFNULL(SUM(t.pontuacao),0)
+                ) AS s) AS posicao
+            FROM usuario u
+            LEFT JOIN tentativa_quiz t ON t.id_usuario = u.id
+            GROUP BY u.id
+        ) AS ranking WHERE usuario_id = ?;
+    `;
+    return database.executar(instrucaoSql, [id_usuario]);
 }
 
 module.exports = {
@@ -70,4 +101,7 @@ module.exports = {
     buscarPorId,
     buscarDesempenho,
     buscarRanking
+    ,
+    buscarMaiorPontuacaoPorQuiz,
+    buscarPosicaoUsuario
 };

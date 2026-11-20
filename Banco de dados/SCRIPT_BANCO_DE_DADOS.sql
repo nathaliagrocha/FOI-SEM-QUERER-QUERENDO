@@ -10,14 +10,23 @@ email VARCHAR (100),
 senha INT 
 );
 
--- TABELA QUE ARMAZENA A QUANTIDADE DE ACERTOS QUE TEVE POR QUESTÃO, O TOTAL DE ACERTOS EM TODO QUIZ E A QUANTIDADE DE VEZES QUE O QUIZ FOI REALIZADO
-CREATE TABLE quiz(
-id INT PRIMARY KEY AUTO_INCREMENT,
-acertosQuestao INT,
-totalAcertos INT,
-qtdQuiz INT,
-fk_usuario INT,
-FOREIGN KEY (fk_usuario) REFERENCES usuario (id)
+CREATE TABLE quiz (
+    id_quiz INT PRIMARY KEY AUTO_INCREMENT,
+    nome VARCHAR(100) NOT NULL,
+    total_questoes INT NOT NULL,
+    pontuacao_maxima DECIMAL(8,2) NOT NULL
+);
+
+CREATE TABLE tentativa_quiz (
+    id_tentativa INT PRIMARY KEY AUTO_INCREMENT,
+    id_usuario INT NOT NULL,
+    id_quiz INT NOT NULL,
+    acertos INT NOT NULL,
+    total_questoes INT NOT NULL,
+    pontuacao DECIMAL(8,2) NOT NULL,
+
+    FOREIGN KEY (id_usuario) REFERENCES usuario(id),
+    FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz)
 );
 
 select * from usuario;

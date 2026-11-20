@@ -62,12 +62,7 @@
 
     <!-- Primeira parte -->
     <div class="secao-kpi">
-
-        <div class="kpi">
-            <h3>Pontuação total</h3>
-            <p id="pontuacao_total">0</p>
-        </div>
-
+        
         <div class="kpi">
             <h3>Total de acertos</h3>
             <p id="total_acertos">0</p>
@@ -122,16 +117,6 @@
             </div>
             <canvas id="graficoBar"></canvas>
         </div>
-
-         <div class="graficoPiz">
-            <p>Distribuição de acertos e erros.</p>
-            <canvas id="graficoPizza"></canvas>
-        </div>
-
-        <div class="graficoLine">
-            <p>Evoluções nas tenativas.</p>
-            <canvas id="graficoLinha"></canvas>
-        </div>
         </div>
 
     <hr>
@@ -164,7 +149,7 @@
             return;
         }
 
-        fetch("/quizzes/desempenho", {
+    fetch("/quizzes/desempenho", {
             method: "GET",
             headers: {
                 "x-access-token": token
@@ -301,70 +286,72 @@
     buscarRanking();
 
     // Script do dashboard: cria gráficos com Chart.js
-    src = "script.js"
-    // Seleciona o canvas onde o gráfico de barras será desenhado
-    const graficoBar = document.getElementById("graficoBar");
+    // Busca os dados de maior pontuação por quiz e desenha o gráfico
+    function buscarMaiorPontuacao() {
+        var token = obterTokenSessao();
+        if (token == null) return;
 
-    new Chart(graficoBar, {
-        type: "bar",
+        fetch("/quizzes/maior_pontuacao", {
+            method: "GET",
+            headers: { "x-access-token": token }
+        }).then(function (res) {
+            if (!res.ok) return;
+            return res.json().then(function (dados) {
+                var labels = dados.map(function (d) { return d.titulo; });
+                var data = dados.map(function (d) { return Number(d.maior_pontuacao) || 0; });
 
-        data: {
-            labels: ["quiz 1", "quiz 2", "quiz 3"],
+                var ctx = document.getElementById("graficoBar").getContext("2d");
+                new Chart(ctx, {
+                    type: "bar",
+                    data: {
+                        labels: labels,
+                        datasets: [{
+                            label: "Maior pontuação por quiz",
+                            data: data,
+                            borderColor: "green",
+                            backgroundColor: "rgba(0,128,0,0.6)"
+                        }]
+                    },
+                    options: {
+                        responsive: true,
+                        maintainAspectRatio: false,
+                        scales: {
+                            y: { beginAtZero: true, max: 100 }
+                        }
+                    }
+                });
+            });
+        }).catch(function (erro) {
+            console.log("#ERRO ao buscar maior pontuação: " + erro);
+        });
+    }
 
-            datasets: [
-                {
-                    label: "Desempenho por quiz",
-                    data: [5, 15, 25],
-                    borderColor: "green",
-                    backgroundColor: "green"
+    // Busca posição do usuário e atualiza o texto abaixo do pódio
+    function buscarPosicaoUsuario() {
+        var token = obterTokenSessao();
+        if (token == null) return;
 
+        fetch("/quizzes/posicao_usuario", {
+            method: "GET",
+            headers: { "x-access-token": token }
+        }).then(function (res) {
+            if (!res.ok) return;
+            return res.json().then(function (dados) {
+                var posicaoEl = document.querySelector(".posicao.podio p");
+                if (posicaoEl) {
+                    if (dados.posicao == null) {
+                        posicaoEl.innerHTML = "Você ainda não realizou quizzes.";
+                    } else {
+                        posicaoEl.innerHTML = "Sua posição é " + dados.posicao + " com " + formatarNumero(Number(dados.pontuacao_total) || 0) + " pontos";
+                    }
                 }
-            ]
-        }
-    });
+            });
+        }).catch(function (erro) {
+            console.log("#ERRO ao buscar posição do usuário: " + erro);
+        });
+    }
 
-
-    // Seleciona o canvas onde o gráfico de pizza será desenhado
-    const graficoPizza = document.getElementById("graficoPizza");
-
-    new Chart(graficoPizza, {
-        type: "doughnut",
-
-        data: {
-            labels: ["Acertos", "Erros"],
-
-            datasets: [{
-                data: [80, 30],
-
-                backgroundColor: [
-                    "green",
-                    "orange"
-                ]
-            }]
-        }
-    });
-
-    // Seleciona o canvas onde o gráfico de barras será desenhado
-    const graficoLinha = document.getElementById("graficoLinha");
-
-    new Chart(graficoLinha, {
-        type: "line",
-
-        data: {
-            labels: ["Tentativa 1", "Tentativa 2", "Tentativa 3", "Tentativa 4","Tentativa 5"],
-
-            datasets: [
-                {
-                    label: "Evolução de pontuação",
-                    data: [5, 15, 25, 40,60],
-                    borderColor: "green",
-                    backgroundColor: "green"
-
-                }
-            ]
-        }
-    });
-
+    buscarMaiorPontuacao();
+    buscarPosicaoUsuario();
     
-
 </script>

@@ -106,8 +106,40 @@ function buscarRanking(req, res) {
     });
 }
 
+// Controller: buscarMaiorPontuacao
+function buscarMaiorPontuacao(req, res) {
+    quizModel.buscarMaiorPontuacaoPorQuiz().then(function (resultado) {
+        res.status(200).json(resultado);
+    }).catch(function (erro) {
+        console.log("Erro ao buscar maior pontuação por quiz: ", erro.message);
+        res.status(500).send("Erro interno ao buscar maior pontuação.");
+    });
+}
+
+// Controller: buscarPosicaoUsuario
+function buscarPosicaoUsuario(req, res) {
+    var token = req.headers["x-access-token"];
+    var usuario = usuarioController.obterUsuarioPorToken(token);
+
+    if (usuario == null) {
+        res.status(401).send("Sessão inválida. Faça login novamente.");
+        return;
+    }
+
+    quizModel.buscarPosicaoUsuario(usuario.id).then(function (resultado) {
+        var dados = resultado[0] || { posicao: null, pontuacao_total: 0 };
+        res.status(200).json(dados);
+    }).catch(function (erro) {
+        console.log("Erro ao buscar posição do usuário: ", erro.message);
+        res.status(500).send("Erro interno ao buscar posição do usuário.");
+    });
+}
+
 module.exports = {
     salvar_resultado,
     buscarDesempenho,
     buscarRanking
+    ,
+    buscarMaiorPontuacao,
+    buscarPosicaoUsuario
 };

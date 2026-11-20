@@ -22,4 +22,14 @@ router.post("/resultado", function (req, res) {
     quizController.salvar_resultado(req, res);
 });
 
+// Rota GET /quizzes/maior_pontuacao
+router.get("/maior_pontuacao", function (req, res) {
+    quizController.buscarMaiorPontuacao(req, res);
+});
+
+// Rota GET /quizzes/posicao_usuario
+router.get("/posicao_usuario", function (req, res) {
+    quizController.buscarPosicaoUsuario(req, res);
+});
+
 module.exports = router;
