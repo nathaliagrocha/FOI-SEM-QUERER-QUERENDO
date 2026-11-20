@@ -1,13 +1,12 @@
-var crypto = require("crypto");
 var usuarioModel = require("../models/usuarioModel");
 
 // Guarda as sessões ativas na memória do servidor.
-// A chave é o token e o valor são os dados básicos do usuário.
+// A chave é o ID do usuário e o valor são os dados básicos do usuário.
 // Como fica em memória, ao reiniciar o servidor os usuários precisam fazer login novamente.
 var sessoes = {};
 
 // Controller: autenticar
-// Valida os dados recebidos, confere email/senha no banco e cria um token de sessão.
+// Valida os dados recebidos, confere email/senha no banco e inicia a sessão do usuário.
 function autenticar(req, res) {
     var email = String(req.body.emailServer || "").trim().toLowerCase();
     var senha = String(req.body.senhaServer || "");
@@ -23,17 +22,14 @@ function autenticar(req, res) {
                     if (resultadoAutenticar.length == 1) {
                         var usuario = resultadoAutenticar[0];
 
-                        // Gera um token aleatório e guarda no servidor qual usuário ele representa.
-                        var token = crypto.randomBytes(32).toString("hex");
-                        sessoes[token] = {
-                            id: usuario.id,
+                        // Inicia a sessão identificando o usuário pelo ID.
+                        sessoes[usuario.id] = {
                             nome: usuario.nome,
                             email: usuario.email
                         };
 
                         // A senha não é devolvida para o frontend.
                         res.json({
-                            token: token,
                             id: usuario.id,
                             email: usuario.email,
                             nome: usuario.nome
@@ -82,17 +78,16 @@ function cadastrar(req, res) {
 }
 
 // Controller: validarSessao
-// Recebe o token pelo cabeçalho "x-access-token" e confirma no servidor se ele existe.
+// Recebe o ID do usuário no header "x-user-id" e confirma no servidor se a sessão dele ainda é válida.
 // A dashboard usa essa rota para saber quem está conectado.
 function validarSessao(req, res) {
-    var token = req.headers["x-access-token"];
-    var usuario = obterUsuarioPorToken(token);
+    var idUsuario = Number(req.headers["x-user-id"]);
+    var usuario = obterUsuarioAutenticado(idUsuario);
 
     if (usuario == null) {
         res.status(401).json({ autenticado: false });
     } else {
         res.json({
-            autenticado: true,
             id: usuario.id,
             nome: usuario.nome,
             email: usuario.email
@@ -100,39 +95,30 @@ function validarSessao(req, res) {
     }
 }
 
-// Função obterUsuarioPorToken
-// Procura o usuário dono do token. As próximas rotas do backend devem usar esta função
+// Função obterUsuarioAutenticado
+// Procura o usuário logado no servidor. As próximas rotas do backend devem usar esta função
 // e pegar o ID daqui, e nunca confiar em um ID enviado pelo navegador.
-function obterUsuarioPorToken(token) {
-    if (token == undefined) {
+function obterUsuarioAutenticado(idUsuario) {
+    if (idUsuario == undefined || idUsuario == null) {
         return null;
     }
 
-    var usuario = sessoes[token];
+    var usuario = sessoes[idUsuario];
 
     if (usuario == undefined) {
         return null;
     }
 
-    return usuario;
-}
-
-// Controller: sair
-// Apaga o token da memória do servidor para encerrar a sessão.
-function sair(req, res) {
-    var token = req.headers["x-access-token"];
-
-    if (token != undefined) {
-        delete sessoes[token];
-    }
-
-    res.status(200).send("Sessão encerrada.");
+    return {
+        id: Number(idUsuario),
+        nome: usuario.nome,
+        email: usuario.email
+    };
 }
 
 module.exports = {
     autenticar,
     cadastrar,
     validarSessao,
-    sair,
-    obterUsuarioPorToken
+    obterUsuarioAutenticado
 };

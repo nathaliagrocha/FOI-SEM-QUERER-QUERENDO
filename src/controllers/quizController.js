@@ -2,11 +2,11 @@ var quizModel = require("../models/quizModel");
 var usuarioController = require("./usuarioController");
 
 // Controller: salvar_resultado
-// Identifica o usuário pelo token da sessão e grava uma tentativa do quiz.
-// O ID do usuário nunca é recebido do navegador.
+// Identifica o usuário pela sessão e grava uma tentativa do quiz.
+// O ID do usuário vem da sessão, nunca do navegador.
 function salvar_resultado(req, res) {
-    var token = req.headers["x-access-token"];
-    var usuario = usuarioController.obterUsuarioPorToken(token);
+    var idUsuario = Number(req.headers["x-user-id"]);
+    var usuario = usuarioController.obterUsuarioAutenticado(idUsuario);
 
     if (usuario == null) {
         res.status(401).send("Sessão inválida. Faça login novamente.");
@@ -42,7 +42,7 @@ function salvar_resultado(req, res) {
             // Arredonda para duas casas decimais apenas no final.
             var pontuacao = Math.round((total_acertos / total_questoes) * 10000) / 100;
 
-            // Salva a tentativa para o usuário identificado pelo token da sessão.
+            // Salva a tentativa para o usuário da sessão.
             return quizModel.salvar_resultado(usuario.id, numero_quiz, total_acertos, total_questoes, pontuacao)
                 .then(function (resultado) {
                     res.status(201).json({
@@ -58,11 +58,11 @@ function salvar_resultado(req, res) {
 }
 
 // Controller: buscarDesempenho
-// Identifica o usuário pelo token da sessão e busca o resumo de desempenho
+// Identifica o usuário da sessão e busca o resumo de desempenho
 // usado nas KPIs da dashboard (pontuação total, acertos, porcentagem e quizzes).
 function buscarDesempenho(req, res) {
-    var token = req.headers["x-access-token"];
-    var usuario = usuarioController.obterUsuarioPorToken(token);
+    var idUsuario = Number(req.headers["x-user-id"]);
+    var usuario = usuarioController.obterUsuarioAutenticado(idUsuario);
 
     if (usuario == null) {
         res.status(401).send("Sessão inválida. Faça login novamente.");
@@ -90,8 +90,8 @@ function buscarDesempenho(req, res) {
 // Controller: buscarRanking
 // Busca o ranking de usuarios com melhor desempenho nos quizzes (top 3).
 function buscarRanking(req, res) {
-    var token = req.headers["x-access-token"];
-    var usuario = usuarioController.obterUsuarioPorToken(token);
+    var idUsuario = Number(req.headers["x-user-id"]);
+    var usuario = usuarioController.obterUsuarioAutenticado(idUsuario);
 
     if (usuario == null) {
         res.status(401).send("Sessão inválida. Faça login novamente.");
@@ -118,8 +118,8 @@ function buscarMaiorPontuacao(req, res) {
 
 // Controller: buscarPosicaoUsuario
 function buscarPosicaoUsuario(req, res) {
-    var token = req.headers["x-access-token"];
-    var usuario = usuarioController.obterUsuarioPorToken(token);
+    var idUsuario = Number(req.headers["x-user-id"]);
+    var usuario = usuarioController.obterUsuarioAutenticado(idUsuario);
 
     if (usuario == null) {
         res.status(401).send("Sessão inválida. Faça login novamente.");

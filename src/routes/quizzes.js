@@ -4,7 +4,7 @@ var router = express.Router();
 var quizController = require("../controllers/quizController");
 
 // Rota GET /quizzes/desempenho
-// Retorna os KPIs de desempenho do usuário logado (via token na sessão).
+// Retorna os KPIs de desempenho do usuário logado (via ID da sessão).
 router.get("/desempenho", function (req, res) {
     quizController.buscarDesempenho(req, res);
 });
@@ -17,7 +17,7 @@ router.get("/ranking", function (req, res) {
 
 // Rota POST /quizzes/resultado
 // Recebe o número do quiz e a quantidade de acertos.
-// O usuário é identificado pelo token enviado no cabeçalho x-access-token.
+// O usuário é identificado pelo ID enviado no cabeçalho x-user-id.
 router.post("/resultado", function (req, res) {
     quizController.salvar_resultado(req, res);
 });
