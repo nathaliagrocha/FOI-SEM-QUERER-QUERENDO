@@ -192,9 +192,9 @@ function salvar_resultado() {
 
     resultado_salvo = true;
 
-    const token = obterTokenSessao();
+    const idUsuario = obterIdUsuario();
 
-    if (token == null) {
+    if (idUsuario == null) {
         console.log("Resultado não salvo: sessão não encontrada.");
         return Promise.resolve(true);
     }
@@ -205,7 +205,7 @@ function salvar_resultado() {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
-            "x-access-token": token
+            "x-user-id": idUsuario
         },
         body: JSON.stringify({
             numero_quiz: id_quiz_atual,
@@ -213,7 +213,7 @@ function salvar_resultado() {
         })
     }).then(function (resposta) {
         if (resposta.status == 401) {
-            limparSessao();
+            window.location = "../login.html";
             return false;
         }
 

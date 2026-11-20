@@ -47,7 +47,7 @@
                 </a>
             </div>
 
-            <div class="btn-logout" onclick="limparSessao()"><a href="../login.html">
+            <div class="btn-logout"><a href="../index.html">
                 <h3>Sair</h3>
                 </a>
             </div>
@@ -134,7 +134,7 @@
     validarSessao();
 
     // Se o navegador restaurar esta página pelo botão Voltar (cache de navegação),
-    // valida a sessão novamente. Se o token foi apagado no logout, manda para o login.
+    // valida a sessão novamente. Se a sessão não for válida, manda para o login.
     window.addEventListener("pageshow", function (evento) {
         if (evento.persisted) {
             validarSessao();
@@ -143,16 +143,16 @@
 
     // Script do dashboard: busca os KPIs de desempenho do usuário logado.
     function buscarDesempenho() {
-        var token = obterTokenSessao();
+        var idUsuario = obterIdUsuario();
 
-        if (token == null) {
+        if (idUsuario == null) {
             return;
         }
 
     fetch("/quizzes/desempenho", {
             method: "GET",
             headers: {
-                "x-access-token": token
+                "x-user-id": idUsuario
             }
         }).then(function (resposta) {
             if (!resposta.ok) {
@@ -180,16 +180,16 @@
 
     // Script do dashboard: busca o ranking de usuarios com melhor desempenho nos quizzes.
     function buscarRanking() {
-        var token = obterTokenSessao();
+        var idUsuario = obterIdUsuario();
 
-        if (token == null) {
+        if (idUsuario == null) {
             return;
         }
 
         fetch("/quizzes/ranking", {
             method: "GET",
             headers: {
-                "x-access-token": token
+                "x-user-id": idUsuario
             }
         }).then(function (resposta) {
             if (!resposta.ok) {
@@ -288,12 +288,12 @@
     // Script do dashboard: cria gráficos com Chart.js
     // Busca os dados de maior pontuação por quiz e desenha o gráfico
     function buscarMaiorPontuacao() {
-        var token = obterTokenSessao();
-        if (token == null) return;
+        var idUsuario = obterIdUsuario();
+        if (idUsuario == null) return;
 
         fetch("/quizzes/maior_pontuacao", {
             method: "GET",
-            headers: { "x-access-token": token }
+            headers: { "x-user-id": idUsuario }
         }).then(function (res) {
             if (!res.ok) return;
             return res.json().then(function (dados) {
@@ -328,12 +328,12 @@
 
     // Busca posição do usuário e atualiza o texto abaixo do pódio
     function buscarPosicaoUsuario() {
-        var token = obterTokenSessao();
-        if (token == null) return;
+        var idUsuario = obterIdUsuario();
+        if (idUsuario == null) return;
 
         fetch("/quizzes/posicao_usuario", {
             method: "GET",
-            headers: { "x-access-token": token }
+            headers: { "x-user-id": idUsuario }
         }).then(function (res) {
             if (!res.ok) return;
             return res.json().then(function (dados) {
