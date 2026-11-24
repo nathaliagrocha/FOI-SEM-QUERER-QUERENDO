@@ -30,3 +30,4 @@ CREATE TABLE tentativa_quiz (
     FOREIGN KEY (id_usuario) REFERENCES usuario(id),
     FOREIGN KEY (id_quiz) REFERENCES quiz(id_quiz)
 );
+

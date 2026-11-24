@@ -41,9 +41,6 @@
 
         <!-- ÁREA AO LADO DA NAVBAR -->
         <div class="selecao_conteudo">
-            <button type="button" class="btn-voltar-quiz" onclick="voltar_para_selecao()">Voltar para os
-                quizzes</button>
-
             <div id="pontuacaoEJogo">
                 <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
                 <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
@@ -105,175 +102,369 @@
         </div>
     </div>
 
-    <script>
+            <script>
         // Número do quiz nesta página (usado ao salvar a tentativa no banco).
         const numero_do_quiz = 2;
 
         const listaDeQuestoes = [
-            {
-                pergunta: "No episódio “Remédio Duro de Engolir”, o que Seu Madruga faz para tentar convencer Chiquinha a tomar o remédio?",
-                alternativaA: "Mistura o remédio com suco.",
-                alternativaB: "Finge tomar uma colherada para dar o exemplo.",
-                alternativaC: "Ameaça chamar o médico.",
-                alternativaD: "Pede para Dona Clotilde conversar com ela.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "Quem contou a história do “Jeca Valente” durante o Festival da Boa Vizinhança?",
-                alternativaA: "Dona Clotilde.",
-                alternativaB: "Chiquinha.",
-                alternativaC: "Seu Madruga.",
-                alternativaD: "Dona Florinda.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "Em “A Bandinha da Vila”, quem coloca miolos de pão nos ouvidos para tentar não escutar o barulho das crianças?",
-                alternativaA: "Professor Girafales.",
-                alternativaB: "Seu Madruga.",
-                alternativaC: "Sr. Barriga.",
-                alternativaD: "Jaiminho.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "No episódio “A venda da vila”, por que o Sr. Barriga decide negociar a venda do imóvel com o Sr. Calvillo?",
-                alternativaA: "Porque estava cansado dos moradores e queria se mudar.",
-                alternativaB: "Porque estava enfrentando um problema cardíaco.",
-                alternativaC: "Porque havia perdido dinheiro em uma negociação.",
-                alternativaD: "Porque pretendia construir um hotel no terreno.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "Durante a mudança de Seu Madruga, o que Chaves e Quico encontram entre os pertences dele?",
-                alternativaA: "Uma caixa com cartas antigas.",
-                alternativaB: "Um álbum de fotografias de quando ele era boxeador.",
-                alternativaC: "Um troféu de futebol.",
-                alternativaD: "Uma coleção de ferramentas.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "No episódio “O restaurante da Dona Florinda”, o que a leva a decidir abrir seu próprio estabelecimento?",
-                alternativaA: "Ela perde uma aposta com o Professor Girafales.",
-                alternativaB: "Ela vai a um bar para comer panquecas e decide comprar o local.",
-                alternativaC: "Seu Madruga sugere que ela comece um negócio.",
-                alternativaD: "Sr. Barriga oferece o imóvel para ela.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "No episódio “A venda da vila”, qual era o nome do possível comprador do imóvel?",
-                alternativaA: "Sr. Cente.",
-                alternativaB: "Sr. Calvillo.",
-                alternativaC: "Sr. Hurtado.",
-                alternativaD: "Sr. Furtado.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "No episódio “O Julgamento do Chaves”, quem propõe realizar um julgamento para decidir se Chaves é culpado pela morte do gato de Quico?",
-                alternativaA: "Seu Madruga.",
-                alternativaB: "Professor Girafales.",
-                alternativaC: "Dona Florinda.",
-                alternativaD: "Sr. Barriga.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "Em “A Morte do Seu Madruga”, por que ele fica tão assustado durante o dia do próprio aniversário?",
-                alternativaA: "Porque acredita que os moradores estão planejando expulsá-lo.",
-                alternativaB: "Porque pensa que está prestes a morrer.",
-                alternativaC: "Porque acredita que Chiquinha está doente.",
-                alternativaD: "Porque recebe uma notícia sobre sua antiga profissão.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "O que faz o Sr. Barriga mudar de ideia sobre o despejo de Seu Madruga?",
-                alternativaA: "Chiquinha promete pagar os aluguéis.",
-                alternativaB: "Dona Florinda pede que ele tenha piedade.",
-                alternativaC: "Ele se lembra de que Seu Madruga salvou sua vida no passado.",
-                alternativaD: "Chaves oferece trabalhar para quitar a dívida.",
-                alternativaCorreta: "alternativaC"
-            },
-            {
-                pergunta: "Em “O Dinheiro Perdido”, qual é o problema enfrentado por Seu Madruga?",
-                alternativaA: "Ele encontra dinheiro, mas não sabe a quem pertence.",
-                alternativaB: "Ele consegue o dinheiro do aluguel, mas não consegue encontrá-lo.",
-                alternativaC: "Ele empresta dinheiro a Quico e não recebe de volta.",
-                alternativaD: "Ele perde o dinheiro que receberia por um trabalho.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "No episódio “Bilhetes Trocados”, qual confusão Chiquinha provoca?",
-                alternativaA: "Troca uma carta de amor do Professor Girafales pela lista de compras de Seu Madruga.",
-                alternativaB: "Entrega uma carta de Dona Florinda para Seu Madruga.",
-                alternativaC: "Troca os bilhetes de aniversário de Quico e Chiquinha.",
-                alternativaD: "Entrega uma carta de cobrança do Sr. Barriga ao Professor Girafales.",
-                alternativaCorreta: "alternativaA"
-            },
-            {
-                pergunta: "Qual o nome do amigo imaginário de chaves?",
-                alternativaA: "Espiquidiberto.",
-                alternativaB: "Xelofonfilo.",
-                alternativaC: "Cente.",
-                alternativaD: "Furtado.",
-                alternativaCorreta: "alternativaC"
-            },
-            {
-                pergunta: "No episódio “Os Espíritos Zombeteiros”, quem colocava pratos de comida dentro do barril de Chaves durante a noite, sem se lembrar do que fazia?",
-                alternativaA: "Quico.",
-                alternativaB: "Seu Madruga.",
-                alternativaC: "Dona Clotilde.",
-                alternativaD: "Chiquinha.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "Em “A Fonte dos Desejos”, quem inventa que a fonte da escola realiza desejos quando alguém joga moedas nela?",
-                alternativaA: "Paty.",
-                alternativaB: "Pópis.",
-                alternativaC: "Chiquinha.",
-                alternativaD: "Quico.",
-                alternativaCorreta: "alternativaC"
-            },
-            {
-                pergunta: "No episódio “Peixe Cru Faz Bem pra Memória”, de quem eram os peixinhos coloridos que começam a desaparecer?",
-                alternativaA: "Dona Florinda.",
-                alternativaB: "Chiquinha.",
-                alternativaC: "Chaves.",
-                alternativaD: "Dona Clotilde.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "Em “Pai por Algumas Horas”, quem acaba ficando responsável por cuidar de um bebê depois de uma confusão envolvendo duas cestas?",
-                alternativaA: "Professor Girafales.",
-                alternativaB: "Sr. Barriga.",
-                alternativaC: "Seu Madruga.",
-                alternativaD: "Jaiminho.",
-                alternativaCorreta: "alternativaC"
-            },
-            {
-                pergunta: "No episódio A Guerra é de Terra, o que Chaves estava tentando fazer ao espalhar terra pelo pátio da vila?",
-                alternativaA: "Plantar moedas para que nascesse uma árvore de dinheiro.",
-                alternativaB: "Plantar um ovo para que nascesse uma árvore de galinhas.",
-                alternativaC: "Enterrar brinquedos para que ninguém os encontrasse.",
-                alternativaD: "Preparar um terreno para construir uma pequena horta.",
-                alternativaCorreta: "alternativaB"
-            },
-            {
-                pergunta: "Em “O Bilhete de Loteria”, para quem Chaves vende seu último bilhete?",
-                alternativaA: "Professor Girafales.",
-                alternativaB: "Sr. Barriga.",
-                alternativaC: "Seu Madruga.",
-                alternativaD: "Dona Florinda.",
-                alternativaCorreta: "alternativaC"
-            },
-            {
-                pergunta: "No episódio “O Velho do Saco”, porque Quico fica assustado quando Seu Madruga aparece carregando uma sacola enorme?",
-                alternativaA: "Porque acredita que Seu Madruga está carregando um ladrão.",
-                alternativaB: "Porque pensa que ele é o Velho do Saco.",
-                alternativaC: "Porque acredita que há um animal perigoso dentro da sacola.",
-                alternativaD: "Porque pensa que ele está levando Chaves embora.",
-                alternativaCorreta: "alternativaB"
-            }
-        ];
-    </script>
+    {
+        "pergunta": "No episódio “Remédio Duro de Engolir”, o que Seu Madruga faz para tentar convencer Chiquinha a tomar o remédio?",
+        "alternativaA": "Mistura o remédio com suco.",
+        "alternativaB": "Finge tomar uma colherada para dar o exemplo.",
+        "alternativaC": "Ameaça chamar o médico.",
+        "alternativaD": "Pede para Dona Clotilde conversar com ela.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Quem contou a história do “Jeca Valente” durante o Festival da Boa Vizinhança?",
+        "alternativaA": "Dona Clotilde.",
+        "alternativaB": "Chiquinha.",
+        "alternativaC": "Seu Madruga.",
+        "alternativaD": "Dona Florinda.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Em “A Bandinha da Vila”, quem coloca miolos de pão nos ouvidos para tentar não escutar o barulho das crianças?",
+        "alternativaA": "Professor Girafales.",
+        "alternativaB": "Seu Madruga.",
+        "alternativaC": "Sr. Barriga.",
+        "alternativaD": "Jaiminho.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "No episódio “A venda da vila”, por que o Sr. Barriga decide negociar a venda do imóvel com o Sr. Calvillo?",
+        "alternativaA": "Porque estava cansado dos moradores e queria se mudar.",
+        "alternativaB": "Porque estava enfrentando um problema cardíaco.",
+        "alternativaC": "Porque havia perdido dinheiro em uma negociação.",
+        "alternativaD": "Porque pretendia construir um hotel no terreno.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Durante a mudança de Seu Madruga, o que Chaves e Quico encontram entre os pertences dele?",
+        "alternativaA": "Uma caixa com cartas antigas.",
+        "alternativaB": "Um álbum de fotografias de quando ele era boxeador.",
+        "alternativaC": "Um troféu de futebol.",
+        "alternativaD": "Uma coleção de ferramentas.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "No episódio “O restaurante da Dona Florinda”, o que a leva a decidir abrir seu próprio estabelecimento?",
+        "alternativaA": "Ela perde uma aposta com o Professor Girafales.",
+        "alternativaB": "Ela vai a um bar para comer panquecas e decide comprar o local.",
+        "alternativaC": "Seu Madruga sugere que ela comece um negócio.",
+        "alternativaD": "Sr. Barriga oferece o imóvel para ela.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "No episódio “A venda da vila”, qual era o nome do possível comprador do imóvel?",
+        "alternativaA": "Sr. Cente.",
+        "alternativaB": "Sr. Calvillo.",
+        "alternativaC": "Sr. Hurtado.",
+        "alternativaD": "Sr. Furtado.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "No episódio “O Julgamento do Chaves”, quem propõe realizar um julgamento para decidir se Chaves é culpado pela morte do gato de Quico?",
+        "alternativaA": "Seu Madruga.",
+        "alternativaB": "Professor Girafales.",
+        "alternativaC": "Dona Florinda.",
+        "alternativaD": "Sr. Barriga.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Em “A Morte do Seu Madruga”, por que ele fica tão assustado durante o dia do próprio aniversário?",
+        "alternativaA": "Porque acredita que os moradores estão planejando expulsá-lo.",
+        "alternativaB": "Porque pensa que está prestes a morrer.",
+        "alternativaC": "Porque acredita que Chiquinha está doente.",
+        "alternativaD": "Porque recebe uma notícia sobre sua antiga profissão.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "O que faz o Sr. Barriga mudar de ideia sobre o despejo de Seu Madruga?",
+        "alternativaA": "Chiquinha promete pagar os aluguéis.",
+        "alternativaB": "Dona Florinda pede que ele tenha piedade.",
+        "alternativaC": "Ele se lembra de que Seu Madruga salvou sua vida no passado.",
+        "alternativaD": "Chaves oferece trabalhar para quitar a dívida.",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "Em “O Dinheiro Perdido”, qual é o problema enfrentado por Seu Madruga?",
+        "alternativaA": "Ele encontra dinheiro, mas não sabe a quem pertence.",
+        "alternativaB": "Ele consegue o dinheiro do aluguel, mas não consegue encontrá-lo.",
+        "alternativaC": "Ele empresta dinheiro a Quico e não recebe de volta.",
+        "alternativaD": "Ele perde o dinheiro que receberia por um trabalho.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "No episódio “Bilhetes Trocados”, qual confusão Chiquinha provoca?",
+        "alternativaA": "Troca uma carta de amor do Professor Girafales pela lista de compras de Seu Madruga.",
+        "alternativaB": "Entrega uma carta de Dona Florinda para Seu Madruga.",
+        "alternativaC": "Troca os bilhetes de aniversário de Quico e Chiquinha.",
+        "alternativaD": "Entrega uma carta de cobrança do Sr. Barriga ao Professor Girafales.",
+        "alternativaCorreta": "alternativaA"
+    },
+    {
+        "pergunta": "Qual o nome do amigo imaginário de chaves?",
+        "alternativaA": "Espiquidiberto.",
+        "alternativaB": "Xelofonfilo.",
+        "alternativaC": "Cente.",
+        "alternativaD": "Furtado.",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "No episódio “Os Espíritos Zombeteiros”, quem colocava pratos de comida dentro do barril de Chaves durante a noite, sem se lembrar do que fazia?",
+        "alternativaA": "Quico.",
+        "alternativaB": "Seu Madruga.",
+        "alternativaC": "Dona Clotilde.",
+        "alternativaD": "Chiquinha.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Em “A Fonte dos Desejos”, quem inventa que a fonte da escola realiza desejos quando alguém joga moedas nela?",
+        "alternativaA": "Paty.",
+        "alternativaB": "Pópis.",
+        "alternativaC": "Chiquinha.",
+        "alternativaD": "Quico.",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "No episódio “Peixe Cru Faz Bem pra Memória”, de quem eram os peixinhos coloridos que começam a desaparecer?",
+        "alternativaA": "Dona Florinda.",
+        "alternativaB": "Chiquinha.",
+        "alternativaC": "Chaves.",
+        "alternativaD": "Dona Clotilde.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Em “Pai por Algumas Horas”, quem acaba ficando responsável por cuidar de um bebê depois de uma confusão envolvendo duas cestas?",
+        "alternativaA": "Professor Girafales.",
+        "alternativaB": "Sr. Barriga.",
+        "alternativaC": "Seu Madruga.",
+        "alternativaD": "Jaiminho.",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "No episódio A Guerra é de Terra, o que Chaves estava tentando fazer ao espalhar terra pelo pátio da vila?",
+        "alternativaA": "Plantar moedas para que nascesse uma árvore de dinheiro.",
+        "alternativaB": "Plantar um ovo para que nascesse uma árvore de galinhas.",
+        "alternativaC": "Enterrar brinquedos para que ninguém os encontrasse.",
+        "alternativaD": "Preparar um terreno para construir uma pequena horta.",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Em “O Bilhete de Lotaria”, para quem Chaves vende seu último bilhete?",
+        "alternativaA": "Professor Girafales.",
+        "alternativaB": "Sr. Barriga.",
+        "alternativaC": "Seu Madruga.",
+        "alternativaD": "Dona Florinda.",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "No episódio “O Velho do Saco”, porque Quico fica assustado quando Seu Madruga aparece carregando uma sacola enorme?",
+        "alternativaA": "Porque acredita que Seu Madruga está carregando um ladrão.",
+        "alternativaB": "Porque pensa que ele é o Velho do Saco.",
+        "alternativaC": "Porque acredita que há um animal perigoso dentro da sacola.",
+        "alternativaD": "Porque pensa que ele está levando Chaves embora.",
+        "alternativaCorreta": "alternativaB"
+    }
+];
 
-    <script src="js/quiz.js"></script>
+        // Variáveis globais do jogo.
+        let numeroDaQuestaoAtual = 0
+        let pontuacaoFinal = 0
+        let tentativaIncorreta = 0
+        let certas = 0
+        let erradas = 0
+        let quantidadeDeQuestoes = listaDeQuestoes.length
+
+        // Valida a sessão do usuário (já carregada pelo js/sessao.js).
+        validarSessao();
+        window.addEventListener("pageshow", function (evento) {
+            if (evento.persisted) {
+                validarSessao();
+            }
+        });
+
+        // Esconde o jogo: ele só aparece quando o usuário clica em "INICIAR QUIZ".
+        function onloadEsconder() {
+            document.getElementById('pontuacao').style.display = "none"
+            document.getElementById('jogo').style.display = "none"
+        }
+
+        // Mostra o jogo e exibe a primeira questão.
+        function iniciarQuiz() {
+            document.getElementById('pontuacao').style.display = "flex"
+            document.getElementById('jogo').style.display = "flex"
+            document.getElementById('btnIniciarQuiz').style.display = "none"
+
+            document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+
+            preencherHTMLcomQuestaoAtual(0)
+
+            btnSubmeter.disabled = false
+            btnProx.disabled = true
+            btnTentarNovamente.disabled = true
+        }
+
+        // Exibe a pergunta e as quatro alternativas do índice informado.
+        function preencherHTMLcomQuestaoAtual(index) {
+            habilitarAlternativas(true)
+
+            const questaoAtual = listaDeQuestoes[index]
+            numeroDaQuestaoAtual = index
+
+            document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // o index começa em 0
+            document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+            document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
+            document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
+            document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
+            document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
+        }
+
+        function submeter() {
+            const options = document.getElementsByName("option");
+
+            let hasChecked = false
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].checked) {
+                    hasChecked = true
+                    break
+                }
+            }
+
+            if (!hasChecked) {
+                alert("Não há alternativas escolhidas. Escolha uma opção.")
+            } else {
+                btnSubmeter.disabled = true
+                btnProx.disabled = false
+
+                habilitarAlternativas(false)
+
+                checarResposta()
+            }
+        }
+
+        function habilitarAlternativas(trueOrFalse) {
+            let opcaoEscolhida = trueOrFalse ? false : true
+
+            primeiraOpcao.disabled = opcaoEscolhida
+            segundaOpcao.disabled = opcaoEscolhida
+            terceiraOpcao.disabled = opcaoEscolhida
+            quartaOpcao.disabled = opcaoEscolhida
+        }
+
+        function avancar() {
+            btnProx.disabled = true
+            btnSubmeter.disabled = false
+
+            desmarcarRadioButtons()
+
+            if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+                preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+            } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+                alert("Atenção... a próxima é a ultima questão!")
+                preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+            } else {
+                finalizarJogo()
+            }
+        }
+
+        function tentarNovamente() {
+            window.location.reload()
+        }
+
+        // Conta acertos e erros. Sem colorir as alternativas ao selecionar.
+        function checarResposta() {
+            const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual]
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta
+
+            const options = document.getElementsByName("option");
+
+            options.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    pontuacaoFinal++
+                    certas++
+                    document.getElementById("spanCertas").innerHTML = certas
+                    numeroDaQuestaoAtual++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    tentativaIncorreta++
+                    erradas++
+                    document.getElementById("spanErradas").innerHTML = erradas
+                    numeroDaQuestaoAtual++
+                }
+            })
+        }
+
+        function desmarcarRadioButtons() {
+            const options = document.getElementsByName("option");
+            for (let i = 0; i < options.length; i++) {
+                options[i].checked = false;
+            }
+        }
+
+        function finalizarJogo() {
+            let textoParaMensagemFinal = null
+            let classComCoresParaMensagemFinal = null
+            const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+
+            if (porcentagemFinalDeAcertos <= 0.3) {
+                textoParaMensagemFinal = "Parece que você não estudou..."
+                classComCoresParaMensagemFinal = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
+                textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinal = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertos >= 0.9) {
+                textoParaMensagemFinal = "Uau, parabéns!"
+                classComCoresParaMensagemFinal = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões."
+
+            document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
+            document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
+            document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
+
+            document.getElementById('jogo').classList.add("text-new-gray")
+
+            btnProx.disabled = true
+            btnSubmeter.disabled = true
+            btnTentarNovamente.disabled = false
+
+            // Salva a tentativa no banco (funcionalidade mantida do flow atual).
+            salvar_resultado();
+        }
+
+        // Salva a tentativa do quiz no banco: envia o número do quiz (definido em cada
+        // página) e a quantidade de acertos. O usuário é identificado pela sessão.
+        function salvar_resultado() {
+            const idUsuario = obterIdUsuario();
+
+            if (idUsuario == null) {
+                console.log("Resultado não salvo: sessão não encontrada.");
+                return;
+            }
+
+            return fetch("/quizzes/resultado", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-user-id": idUsuario
+                },
+                body: JSON.stringify({
+                    numero_quiz: numero_do_quiz,
+                    total_acertos: certas
+                })
+            }).then(function (resposta) {
+                if (!resposta.ok) {
+                    console.log("Resultado não salvo. Status: " + resposta.status);
+                }
+            }).catch(function (erro) {
+                console.log("#ERRO ao salvar resultado do quiz: " + erro);
+            });
+        }
+    </script>
 </body>
 
 </html>

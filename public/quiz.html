@@ -41,8 +41,6 @@
 
         <!-- ÁREA AO LADO DA NAVBAR -->
         <div class="selecao_conteudo">
-            <button type="button" class="btn-voltar-quiz" onclick="voltar_para_selecao()">Voltar para os quizzes</button>
-
             <div id="pontuacaoEJogo">
                 <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
                 <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
@@ -103,175 +101,369 @@
         </div>
     </div>
 
-    <script>
+            <script>
         // Número do quiz nesta página (usado ao salvar a tentativa no banco).
         const numero_do_quiz = 1;
 
         const listaDeQuestoes = [
-        {
-                pergunta: "No episódio do curto circuito, que horas iria começar o jogo da seleção contra a Alemanha?",
-                alternativaA: "6H da manhã",
-                alternativaB: "10h da manhã",
-                alternativaC: "2H da tarde",
-                alternativaD: "7H da noite",
-                alternativaCorreta: "alternativaB"
-        },
-        {
-                pergunta: "Qual presente, o seu barriga dá para o seu madruga no dia de São Valentim?",
-                alternativaA: "Gravata",
-                alternativaB: "Camisa",
-                alternativaC: "Chapéu",
-                alternativaD: "1 mês de aluguel",
-                alternativaCorreta: "alternativaA"
-        },
-        {
-                pergunta: "Qual desses personagens não viaja para Acapulco?",
-                alternativaA: "Prof. Girafales",
-                alternativaB: "Dona Clotilde",
-                alternativaC: "Chiquinha",
-                alternativaD: "Nhonho",
-                alternativaCorreta: "alternativaD"
-        },
-        {
-                pergunta: "Em qual cidade foi fabricado o tecido de casimira que seu madruga ganha?",
-                alternativaA: "Sorocaba",
-                alternativaB: "Taubatè",
-                alternativaC: "Ribeirão preto",
-                alternativaD: "Guaruja",
-                alternativaCorreta: "alternativaB"
-        },
-        {
-                pergunta: "Qual desses ingredientes faz parte da fórmula da chiquinha para ficar invisível?",
-                alternativaA: "Mostarda",
-                alternativaB: "Catchup",
-                alternativaC: "Maionese",
-                alternativaD: "Chocolate",
-                alternativaCorreta: "alternativaA"
-        },
-        {
-                pergunta: "Segundo a Dona Neves, quantos inquilinos moram no cortiço?",
-                alternativaA: "50",
-                alternativaB: "78",
-                alternativaC: "99",
-                alternativaD: "125",
-                alternativaCorreta: "alternativaB"
-        },
-        {
-                pergunta: "Qual o nome do filme que o seu madruga convida a  glória para assistir?",
-                alternativaA: "Furacão",
-                alternativaB: "Tsunami",
-                alternativaC: "Avalanche",
-                alternativaD: "Terremoto",
-                alternativaCorreta: "alternativaD"
-        },
-        {
-                pergunta: "O que é o corpo do benito?",
-                alternativaA: "Uma bola quadrada",
-                alternativaB: "Uma bola de basquete",
-                alternativaC: "Uma bola de beisebol",
-                alternativaD: "Uma bola de boliche",
-                alternativaCorreta: "alternativaD"
-        },
-        {
-                pergunta: "Quais desses trabalhos seu Madruga nunca exerceu?",
-                alternativaA: "Boxeador",
-                alternativaB: "Cabelereiro",
-                alternativaC: "Açougueiro",
-                alternativaD: "Vendedor de balões",
-                alternativaCorreta: "alternativaC"
-        },
-        {
-                pergunta: "No episódio ‘Os campeões de ioiô’ qual dessas manobras não é feita pelos jogadores profissionais?",
-                alternativaA: "Turbilhão",
-                alternativaB: "Lunático",
-                alternativaC: "O ladrão",
-                alternativaD: "Pêndulo",
-                alternativaCorreta: "alternativaD"
-        },
-        {
-                pergunta: "No poema ‘O cão arrependido’. Quantas vezes o verso é repetido?",
-                alternativaA: "22",
-                alternativaB: "33",
-                alternativaC: "44",
-                alternativaD: "55",
-                alternativaCorreta: "alternativaC"
-        },
-        {
-                pergunta: "Segundo chaves, como se chama os animais que comem de tudo?",
-                alternativaA: "Vegetariano",
-                alternativaB: "Nhonho",
-                alternativaC: "Esfomeados",
-                alternativaD: "Ricos",
-                alternativaCorreta: "alternativaD"
-        },
-        {
-                pergunta: "Qual a cor do carro que o seu barriga e o Chaves chegam ao hotel em Acapulco?",
-                alternativaA: "Verde",
-                alternativaB: "Azul",
-                alternativaC: "Preto",
-                alternativaD: "Branco",
-                alternativaCorreta: "alternativaA"
-        },
-        {
-                pergunta: "O que o Chaves pede ao garçom depois de derrubar a mesa no café da manhã?",
-                alternativaA: "Torta de nata",
-                alternativaB: "Refresco de tamarindo",
-                alternativaC: "Sanduíche de presunto",
-                alternativaD: "Cachorro quente",
-                alternativaCorreta: "alternativaD"
-        },
-        {
-                pergunta: "No episódio ‘Uma aula de canto’, quando as crianças estão tocando no pátio da escola. Qual música a Pópis diz que está tocando?",
-                alternativaA: "Mamãe eu quero",
-                alternativaB: "Garota de ipanema",
-                alternativaC: "Ceuzinho lindo",
-                alternativaD: "Que bonita vizinhança",
-                alternativaCorreta: "alternativaC"
-        },
-        {
-                pergunta: "Segundo seu Madruga. Qual animal os elefantes seriam se não tivessem trombas?",
-                alternativaA: "Jacarés",
-                alternativaB: "Vacas",
-                alternativaC: "Rinocerontes",
-                alternativaD: "Capivarasze",
-                alternativaCorreta: "alternativaD"
-        },
-        {
-                pergunta: "No episódio ‘A casa da bruxa’. Qual objeto o seu Madruga pede pra chiquinha levar até a casa da Dona Clotilde",
-                alternativaA: "Vassoura",
-                alternativaB: "Colônia Francesa",
-                alternativaC: "Jornal",
-                alternativaD: "Varinha do satanás",
-                alternativaCorreta: "alternativaC"
-        },
-        {
-                pergunta: "Por qual motivo os moradores saem da vila e vão morar na casa do Seu Barriga?",
-                alternativaA: "A vila vai ser vendida",
-                alternativaB: "A vila vai ser dedetizada",
-                alternativaC: "A vila vai ser reformada",
-                alternativaD: "A vila vai ser demolida",
-                alternativaCorreta: "alternativaC"
-        },
-        {
-                pergunta: "Qual era o nome do restaurante da dona Florinda antes dela comprar?",
-                alternativaA: "Rica pancita",
-                alternativaB: "Fonda",
-                alternativaC: "Tienda",
-                alternativaD: "Butiquim",
-                alternativaCorreta: "alternativaB"
-        },
-        {
-                pergunta: "Qual o número do bilhete premiado para Acapulco?",
-                alternativaA: "350",
-                alternativaB: "487",
-                alternativaC: "912",
-                alternativaD: "157",
-                alternativaCorreta: "alternativaB"
-        }
+    {
+        "pergunta": "No episódio do curto circuito, que horas iria começar o jogo da seleção contra a Alemanha?",
+        "alternativaA": "6H da manhã",
+        "alternativaB": "10h da manhã",
+        "alternativaC": "2H da tarde",
+        "alternativaD": "7H da noite",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Qual presente, o seu barriga dá para o seu madruga no dia de São Valentim?",
+        "alternativaA": "Gravata",
+        "alternativaB": "Camisa",
+        "alternativaC": "Chapéu",
+        "alternativaD": "1 mês de aluguel",
+        "alternativaCorreta": "alternativaA"
+    },
+    {
+        "pergunta": "Qual desses personagens não viaja para Acapulco?",
+        "alternativaA": "Prof. Girafales",
+        "alternativaB": "Dona Clotilde",
+        "alternativaC": "Chiquinha",
+        "alternativaD": "Nhonho",
+        "alternativaCorreta": "alternativaD"
+    },
+    {
+        "pergunta": "Em qual cidade foi fabricado o tecido de casimira que seu madruga ganha?",
+        "alternativaA": "Sorocaba",
+        "alternativaB": "Taubatè",
+        "alternativaC": "Ribeirão preto",
+        "alternativaD": "Guaruja",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Qual desses ingredientes faz parte da fórmula da chiquinha para ficar invisível?",
+        "alternativaA": "Mostarda",
+        "alternativaB": "Catchup",
+        "alternativaC": "Maionese",
+        "alternativaD": "Chocolate",
+        "alternativaCorreta": "alternativaA"
+    },
+    {
+        "pergunta": "Segundo a Dona Neves, quantos inquilinos moram no cortiço?",
+        "alternativaA": "50",
+        "alternativaB": "78",
+        "alternativaC": "99",
+        "alternativaD": "125",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Qual o nome do filme que o seu madruga convida a  glória para assistir?",
+        "alternativaA": "Furacão",
+        "alternativaB": "Tsunami",
+        "alternativaC": "Avalanche",
+        "alternativaD": "Terremoto",
+        "alternativaCorreta": "alternativaD"
+    },
+    {
+        "pergunta": "O que é o corpo do benito?",
+        "alternativaA": "Uma bola quadrada",
+        "alternativaB": "Uma bola de basquete",
+        "alternativaC": "Uma bola de beisebol",
+        "alternativaD": "Uma bola de boliche",
+        "alternativaCorreta": "alternativaD"
+    },
+    {
+        "pergunta": "Quais desses trabalhos seu Madruga nunca exerceu?",
+        "alternativaA": "Boxeador",
+        "alternativaB": "Cabelereiro",
+        "alternativaC": "Açougueiro",
+        "alternativaD": "Vendedor de balões",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "No episódio ‘Os campeões de ioiô’ qual dessas manobra não é feita pelos jogadores profissionais?",
+        "alternativaA": "Turbilhão",
+        "alternativaB": "Lunático",
+        "alternativaC": "O ladrão",
+        "alternativaD": "Pêndulo",
+        "alternativaCorreta": "alternativaD"
+    },
+    {
+        "pergunta": "No poema ‘O cão arrependido’. Quantas vezes o verso é repetido?",
+        "alternativaA": "22",
+        "alternativaB": "33",
+        "alternativaC": "44",
+        "alternativaD": "55",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "Segundo chaves, como se chama os animais que comem de tudo?",
+        "alternativaA": "Vegetariano",
+        "alternativaB": "Nhonho",
+        "alternativaC": "Esfomeados",
+        "alternativaD": "Ricos",
+        "alternativaCorreta": "alternativaD"
+    },
+    {
+        "pergunta": "Qual a cor do carro que o seu barriga e o Chaves chegam ao hotel em Acapulco?",
+        "alternativaA": "Verde",
+        "alternativaB": "Azul",
+        "alternativaC": "Preto",
+        "alternativaD": "Branco",
+        "alternativaCorreta": "alternativaA"
+    },
+    {
+        "pergunta": "O que o Chaves pede ao garçom depois de derrubar a mesa no café da manhã?",
+        "alternativaA": "Torta de nata",
+        "alternativaB": "Refresco de tamarindo",
+        "alternativaC": "Sanduíche de presunto",
+        "alternativaD": "Cachorro quente",
+        "alternativaCorreta": "alternativaD"
+    },
+    {
+        "pergunta": "No episódio ‘Uma aula de canto’, quando as crianças estão tocando no pátio da escola. Qual música a Pópis diz que está tocando?",
+        "alternativaA": "Mamãe eu quero",
+        "alternativaB": "Garota de ipanema",
+        "alternativaC": "Ceuzinho lindo",
+        "alternativaD": "Que bonita vizinhança",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "Segundo seu Madruga. Qual animal os elefantes seriam se não tivessem trombas?",
+        "alternativaA": "Jacarés",
+        "alternativaB": "Vacas",
+        "alternativaC": "Rinocerontes",
+        "alternativaD": "Capivarasze",
+        "alternativaCorreta": "alternativaD"
+    },
+    {
+        "pergunta": "No episódio ‘A casa da bruxa’. Qual objeto o seu Madruga pede pra chiquinha levar até a casa da Dona Clotilde",
+        "alternativaA": "Vassoura",
+        "alternativaB": "Colônia Francesa",
+        "alternativaC": "Jornal",
+        "alternativaD": "Varinha do satanás",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "Por qual motivo os moradores saem da vila e vão morar na casa do Seu Barriga?",
+        "alternativaA": "A vila vai ser vendida",
+        "alternativaB": "A vila vai ser dedetizada",
+        "alternativaC": "A vila vai ser reformada",
+        "alternativaD": "A vila vai ser demolida",
+        "alternativaCorreta": "alternativaC"
+    },
+    {
+        "pergunta": "Qual era o nome do restaurante da dona Florinda antes dela comprar?",
+        "alternativaA": "Rica pancita",
+        "alternativaB": "Fonda",
+        "alternativaC": "Tienda",
+        "alternativaD": "Butiquim",
+        "alternativaCorreta": "alternativaB"
+    },
+    {
+        "pergunta": "Qual o número do bilhete premiado para Acapulco?",
+        "alternativaA": "350",
+        "alternativaB": "487",
+        "alternativaC": "912",
+        "alternativaD": "157",
+        "alternativaCorreta": "alternativaB"
+    }
 ];
-    </script>
 
-    <script src="js/quiz.js"></script>
+        // Variáveis globais do jogo.
+        let numeroDaQuestaoAtual = 0
+        let pontuacaoFinal = 0
+        let tentativaIncorreta = 0
+        let certas = 0
+        let erradas = 0
+        let quantidadeDeQuestoes = listaDeQuestoes.length
+
+        // Valida a sessão do usuário (já carregada pelo js/sessao.js).
+        validarSessao();
+        window.addEventListener("pageshow", function (evento) {
+            if (evento.persisted) {
+                validarSessao();
+            }
+        });
+
+        // Esconde o jogo: ele só aparece quando o usuário clica em "INICIAR QUIZ".
+        function onloadEsconder() {
+            document.getElementById('pontuacao').style.display = "none"
+            document.getElementById('jogo').style.display = "none"
+        }
+
+        // Mostra o jogo e exibe a primeira questão.
+        function iniciarQuiz() {
+            document.getElementById('pontuacao').style.display = "flex"
+            document.getElementById('jogo').style.display = "flex"
+            document.getElementById('btnIniciarQuiz').style.display = "none"
+
+            document.getElementById('qtdQuestoes').innerHTML = quantidadeDeQuestoes
+
+            preencherHTMLcomQuestaoAtual(0)
+
+            btnSubmeter.disabled = false
+            btnProx.disabled = true
+            btnTentarNovamente.disabled = true
+        }
+
+        // Exibe a pergunta e as quatro alternativas do índice informado.
+        function preencherHTMLcomQuestaoAtual(index) {
+            habilitarAlternativas(true)
+
+            const questaoAtual = listaDeQuestoes[index]
+            numeroDaQuestaoAtual = index
+
+            document.getElementById("spanNumeroDaQuestaoAtual").innerHTML = Number(index) + 1 // o index começa em 0
+            document.getElementById("spanQuestaoExibida").innerHTML = questaoAtual.pergunta;
+            document.getElementById("labelOpcaoUm").innerHTML = questaoAtual.alternativaA;
+            document.getElementById("labelOpcaoDois").innerHTML = questaoAtual.alternativaB;
+            document.getElementById("labelOpcaoTres").innerHTML = questaoAtual.alternativaC;
+            document.getElementById("labelOpcaoQuatro").innerHTML = questaoAtual.alternativaD;
+        }
+
+        function submeter() {
+            const options = document.getElementsByName("option");
+
+            let hasChecked = false
+            for (let i = 0; i < options.length; i++) {
+                if (options[i].checked) {
+                    hasChecked = true
+                    break
+                }
+            }
+
+            if (!hasChecked) {
+                alert("Não há alternativas escolhidas. Escolha uma opção.")
+            } else {
+                btnSubmeter.disabled = true
+                btnProx.disabled = false
+
+                habilitarAlternativas(false)
+
+                checarResposta()
+            }
+        }
+
+        function habilitarAlternativas(trueOrFalse) {
+            let opcaoEscolhida = trueOrFalse ? false : true
+
+            primeiraOpcao.disabled = opcaoEscolhida
+            segundaOpcao.disabled = opcaoEscolhida
+            terceiraOpcao.disabled = opcaoEscolhida
+            quartaOpcao.disabled = opcaoEscolhida
+        }
+
+        function avancar() {
+            btnProx.disabled = true
+            btnSubmeter.disabled = false
+
+            desmarcarRadioButtons()
+
+            if (numeroDaQuestaoAtual < quantidadeDeQuestoes - 1) {
+                preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+            } else if (numeroDaQuestaoAtual == quantidadeDeQuestoes - 1) {
+                alert("Atenção... a próxima é a ultima questão!")
+                preencherHTMLcomQuestaoAtual(numeroDaQuestaoAtual)
+            } else {
+                finalizarJogo()
+            }
+        }
+
+        function tentarNovamente() {
+            window.location.reload()
+        }
+
+        // Conta acertos e erros. Sem colorir as alternativas ao selecionar.
+        function checarResposta() {
+            const questaoAtual = listaDeQuestoes[numeroDaQuestaoAtual]
+            const respostaQuestaoAtual = questaoAtual.alternativaCorreta
+
+            const options = document.getElementsByName("option");
+
+            options.forEach((option) => {
+                if (option.checked === true && option.value === respostaQuestaoAtual) {
+                    pontuacaoFinal++
+                    certas++
+                    document.getElementById("spanCertas").innerHTML = certas
+                    numeroDaQuestaoAtual++
+                } else if (option.checked && option.value !== respostaQuestaoAtual) {
+                    tentativaIncorreta++
+                    erradas++
+                    document.getElementById("spanErradas").innerHTML = erradas
+                    numeroDaQuestaoAtual++
+                }
+            })
+        }
+
+        function desmarcarRadioButtons() {
+            const options = document.getElementsByName("option");
+            for (let i = 0; i < options.length; i++) {
+                options[i].checked = false;
+            }
+        }
+
+        function finalizarJogo() {
+            let textoParaMensagemFinal = null
+            let classComCoresParaMensagemFinal = null
+            const porcentagemFinalDeAcertos = pontuacaoFinal / quantidadeDeQuestoes
+
+            if (porcentagemFinalDeAcertos <= 0.3) {
+                textoParaMensagemFinal = "Parece que você não estudou..."
+                classComCoresParaMensagemFinal = "text-danger-with-bg"
+            }
+            else if (porcentagemFinalDeAcertos > 0.3 && porcentagemFinalDeAcertos < 0.9) {
+                textoParaMensagemFinal = "Pode melhorar na próxima, hein!"
+                classComCoresParaMensagemFinal = "text-warning-with-bg"
+            }
+            else if (porcentagemFinalDeAcertos >= 0.9) {
+                textoParaMensagemFinal = "Uau, parabéns!"
+                classComCoresParaMensagemFinal = "text-success-with-bg"
+            }
+
+            textoParaMensagemFinal += "<br> Você acertou " + Math.round((porcentagemFinalDeAcertos)*100) + "% das questões."
+
+            document.getElementById('msgFinal').innerHTML = textoParaMensagemFinal
+            document.getElementById('msgFinal').classList.add(classComCoresParaMensagemFinal)
+            document.getElementById('spanPontuacaoFinal').innerHTML = pontuacaoFinal
+
+            document.getElementById('jogo').classList.add("text-new-gray")
+
+            btnProx.disabled = true
+            btnSubmeter.disabled = true
+            btnTentarNovamente.disabled = false
+
+            // Salva a tentativa no banco (funcionalidade mantida do flow atual).
+            salvar_resultado();
+        }
+
+        // Salva a tentativa do quiz no banco: envia o número do quiz (definido em cada
+        // página) e a quantidade de acertos. O usuário é identificado pela sessão.
+        function salvar_resultado() {
+            const idUsuario = obterIdUsuario();
+
+            if (idUsuario == null) {
+                console.log("Resultado não salvo: sessão não encontrada.");
+                return;
+            }
+
+            return fetch("/quizzes/resultado", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                    "x-user-id": idUsuario
+                },
+                body: JSON.stringify({
+                    numero_quiz: numero_do_quiz,
+                    total_acertos: certas
+                })
+            }).then(function (resposta) {
+                if (!resposta.ok) {
+                    console.log("Resultado não salvo. Status: " + resposta.status);
+                }
+            }).catch(function (erro) {
+                console.log("#ERRO ao salvar resultado do quiz: " + erro);
+            });
+        }
+    </script>
 </body>
 
 </html>
