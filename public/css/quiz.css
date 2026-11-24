@@ -281,10 +281,8 @@ button {
    ========================================= */
 
 .conteudo-direita {
-    display: grid !important;
-    grid-template-columns: repeat(4, 1fr);
-    /* Linha 1: Título | Linha 2: KPIs | Linha 3 e 4: Pódio à esquerda + Gráficos empilhados à direita */
-    grid-template-rows: auto auto auto auto;
+    display: flex !important;
+    flex-direction: column;
     gap: 20px;
     align-content: start;
 }
@@ -309,17 +307,18 @@ hr {
 
 /* 2. KPIs LADO A LADO (Linha 2 - 1 KPI por coluna) */
 .secao-kpi {
-    display: contents !important;
+    display: flex !important;
+    flex-direction: row;
+    gap: 42px;
 }
 
 .kpi {
     background-color: white !important;
     border: 2px solid var(--new-gray);
     border-radius: 10px;
-    grid-row: 2;
     padding: 30px;
-    grid-column: span 2;
     box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+    width: 380px;
 }
 
 
@@ -336,6 +335,14 @@ hr {
     color: var(--new-black);
 }
 
+.graficos-conteudo{
+    display: flex;
+    width: 100%;
+    flex-direction: row;
+    gap: 20px;
+    justify-content: space-between;
+}
+
 /* =========================================================
    3. PÓDIO (LADO ESQUERDO) - CONTROLE MANUAL
    ========================================================= */
@@ -347,7 +354,8 @@ hr {
     position: relative;
     top: 5px;    /* NEGATIVO sobe o pódio | POSITIVO desce */
     left: 3px;     /* NEGATIVO vai p/ esquerda | POSITIVO vai p/ direita */
-    width: 92%;    /* Largura do card branco */
+    flex: 0 0 560px;
+    width: 560px;    /* Largura do card branco */
     height: 562px; /* Altura do card branco (aumente ou diminua aqui) */
     /* ---------------------------------------------------------- */
 
@@ -355,17 +363,13 @@ hr {
     display: flex;
     justify-content: center;
     align-items: flex-end;
-    gap: 20px;
+    gap: 70px; /* Cria o espaçamento entre as barras */
     text-align: center;
     background-color: rgba(255, 255, 255, 0.92);
     padding: 25px;
     border-radius: 12px;
     border: 2px solid var(--new-gray);
     box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.25);
-}
-
-/* Dá espaço na parte de baixo do card do pódio para a frase caber sem encostar nas barras */
-.podio-container {
     padding-bottom: 50px !important; 
 }
 
@@ -433,27 +437,21 @@ hr {
 /* =========================================================
    4. ÁREA DOS GRÁFICOS - CONTROLE MANUAL LIVRE
    ========================================================= */
-.graficos {
-    grid-column: 3 / 5;
-    grid-row: 3 / 5;
-    
+.graficos { 
     /* Flex-wrap libera você para dar o width e height que quiser em cada gráfico */
     display: flex;
+    flex: 1;
+    min-width: 0;
     flex-wrap: wrap;
     align-content: flex-start;
     gap: 15px; /* Espaço entre os cards */
 
     /* Puxa a área inteira para a esquerda (aproveitando a folga do pódio) */
-    position: relative;
-    left: -55px;
-    width: calc(100% + 55px);
-    margin-top: -15px;
+    width: auto;
 }
 
 /* Estilo base dos 3 cards brancos */
-.graficoBar,
-.graficoPiz,
-.graficoLine {
+.graficoBar {
     background-color: #ffffff;
     border-radius: 10px;
     padding: 15px;
@@ -461,36 +459,15 @@ hr {
     position: relative;
     box-sizing: border-box;
     overflow: hidden;
-    
-    /* Ordem visual: Linha primeiro (cima), depois Barras e Pizza (embaixo) */
-    order: 2; 
-}
-
-/* --- 1. GRÁFICO DE LINHA (Fica em cima) --- */
-.graficoLine {
-    order: 1;       /* Garante que ele fique no topo */
-    width: 100%;    /* LARGURA: 100% ocupa a largura toda (ou mude para px, ex: 580px) */
-    height: 290px;  /* ALTURA: mexa livremente neste valor */
-    top: 10px;       /* POSIÇÃO VERTICAL: negativo sobe | positivo desce */
-    left: 0px;      /* POSIÇÃO HORIZONTAL: negativo esquerda | positivo direita */
 }
 
 /* --- 2. GRÁFICO DE BARRAS (Fica embaixo, na esquerda) --- */
 .graficoBar {
     order: 2;
-    width: 90%;     /* LARGURA: mexa livremente (em % ou px, ex: 320px) */
+    width: 100%;     /* LARGURA: mexa livremente (em % ou px, ex: 320px) */
     height: 560px;  /* ALTURA: mexa livremente neste valor */
     top: 10px;       /* POSIÇÃO VERTICAL */
     left: 0px;      /* POSIÇÃO HORIZONTAL */
-}
-
-/* --- 3. GRÁFICO DE PIZZA (Fica embaixo, na direita) --- */
-.graficoPiz {
-    order: 3;
-    width: 35%;     /* LARGURA: mexa livremente (a soma com o de Barras + gap deve dar ~97%) */
-    height: 270px;  /* ALTURA: mexa livremente neste valor */
-    top: 10px;       /* POSIÇÃO VERTICAL */
-    left: 8px;      /* POSIÇÃO HORIZONTAL */
 }
 
 /* =========================================================
@@ -515,9 +492,7 @@ hr {
 
 
 
-.graficoBar p,
-.graficoPiz p,
-.graficoLine p {
+.graficoBar p {
     margin: 0 0 8px 0;
     font-size: 14px;
     font-weight: bold;
@@ -527,17 +502,14 @@ hr {
 
 
 /* Remova o bloco antigo de 'canvas' e coloque este: */
-.graficoBar,
-.graficoPiz,
-.graficoLine {
+.graficoBar{
     display: flex;
     flex-direction: column;
 }
 
 /* Faz o canvas ocupar o espaço livre sem esticar a resolução */
-.graficoBar canvas,
-.graficoPiz canvas,
-.graficoLine canvas {
+.grafico-wrapper {
+    position: relative;
     flex: 1;
     min-height: 0;
 }

@@ -48,82 +48,84 @@
             </div>
 
             <div class="btn-logout"><a href="../index.html">
-                <h3>Sair</h3>
+                    <h3>Sair</h3>
                 </a>
             </div>
         </div>
 
 
-<div class="conteudo-direita">
-    <div class="titulo">
-    <h2>Meu desempenho nos quizzes</h2>
-    </div>
-
-
-    <!-- Primeira parte -->
-    <div class="secao-kpi">
-        
-        <div class="kpi">
-            <h3>Total de acertos</h3>
-            <p id="total_acertos">0</p>
-        </div>
-
-        <div class="kpi">
-            <h3>Porcentagem geral de acertos</h3>
-            <p id="percentual_acertos">0%</p>
-        </div>
-
-        <div class="kpi">
-            <h3>Quizzes concluídos</h3>
-            <p id="quizzes_concluidos">0</p>
-        </div>
-    </div>
-
-
-    <div class="podio-container">
-
-        <div class="titulo-podio">
-            <p>Pódio da Vila</p>
-        </div>
-        <!-- 2º Lugar fica à esquerda -->
-        <div class="coluna segundo">
-            <div class="nome">Jogador 2</div>
-            <div class="bloco">2</div>
-        </div>
-
-        <!-- 1º Lugar fica no centro -->
-        <div class="coluna primeiro">
-            <div class="nome">Jogador 1</div>
-            <div class="bloco">1</div>
-        </div>
-
-        <!-- 3º Lugar fica à direita -->
-        <div class="coluna terceiro">
-            <div class="nome">Jogador 3</div>
-            <div class="bloco">3</div>
-        </div>
-        <div class="posicao podio">
-        <p>Sua posição é xx com 150 pontos</p>
-        </div>
-        <div class="posicao podio">
-
-        </div>
-    </div>
-    <hr>
-    <div class="graficos">
-        <div class="graficoBar">
-            <div>
-                <p>Pontuação por quiz.</p>
+        <div class="conteudo-direita">
+            <div class="titulo">
+                <h2>Meu desempenho nos quizzes</h2>
             </div>
-            <canvas id="graficoBar"></canvas>
+
+
+            <!-- Primeira parte -->
+            <div class="secao-kpi">
+
+                <div class="kpi">
+                    <h3>Total de acertos</h3>
+                    <p id="total_acertos">0</p>
+                </div>
+
+                <div class="kpi">
+                    <h3>Porcentagem geral de acertos</h3>
+                    <p id="percentual_acertos">0%</p>
+                </div>
+
+                <div class="kpi">
+                    <h3>Quizzes concluídos</h3>
+                    <p id="quizzes_concluidos">0</p>
+                </div>
+            </div>
+
+            <div class="graficos-conteudo">
+                <div class="podio-container">
+
+                    <div class="titulo-podio">
+                        <p>Pódio da Vila</p>
+                    </div>
+                    <!-- 2º Lugar fica à esquerda -->
+                    <div class="coluna segundo">
+                        <div class="nome">Jogador 2</div>
+                        <div class="bloco">2</div>
+                    </div>
+
+                    <!-- 1º Lugar fica no centro -->
+                    <div class="coluna primeiro">
+                        <div class="nome">Jogador 1</div>
+                        <div class="bloco">1</div>
+                    </div>
+
+                    <!-- 3º Lugar fica à direita -->
+                    <div class="coluna terceiro">
+                        <div class="nome">Jogador 3</div>
+                        <div class="bloco">3</div>
+                    </div>
+                    <div class="posicao podio">
+                        <p>Sua posição é xx com 150 pontos</p>
+                    </div>
+                    <div class="posicao podio">
+
+                    </div>
+                </div>
+                <hr>
+                <div class="graficos">
+                    <div class="graficoBar">
+                        <div>
+                            <p>Pontuação por quiz.</p>
+                        </div>
+                        <div class="grafico-wrapper">
+                            <canvas id="graficoBar"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <hr>
+            </div>
+
+
         </div>
-        </div>
-
-    <hr>
-
-
-
-</div>
 </body>
 
 </html>
@@ -149,7 +151,7 @@
             return;
         }
 
-    fetch("/quizzes/desempenho", {
+        fetch("/quizzes/desempenho", {
             method: "GET",
             headers: {
                 "x-user-id": idUsuario
@@ -292,12 +294,12 @@
 
         fetch("/quizzes/maior_pontuacao", {
             method: "GET",
-            headers: { "x-user-id": idUsuario }
+            headers: {"x-user-id": idUsuario}
         }).then(function (res) {
             if (!res.ok) return;
             return res.json().then(function (dados) {
-                var labels = dados.map(function (d) { return d.titulo; });
-                var data = dados.map(function (d) { return Number(d.maior_pontuacao) || 0; });
+                var labels = dados.map(function (d) {return d.titulo;});
+                var data = dados.map(function (d) {return Number(d.maior_pontuacao) || 0;});
 
                 var ctx = document.getElementById("graficoBar").getContext("2d");
                 new Chart(ctx, {
@@ -314,8 +316,9 @@
                     options: {
                         responsive: true,
                         maintainAspectRatio: false,
+                        devicePixelRatio: window.devicePixelRatio || 1,
                         scales: {
-                            y: { beginAtZero: true, max: 100 }
+                            y: {beginAtZero: true, max: 100}
                         }
                     }
                 });
@@ -332,13 +335,15 @@
 
         fetch("/quizzes/posicao_usuario", {
             method: "GET",
-            headers: { "x-user-id": idUsuario }
+            headers: {"x-user-id": idUsuario}
         }).then(function (res) {
             if (!res.ok) return;
             return res.json().then(function (dados) {
                 var posicaoEl = document.querySelector(".posicao.podio p");
                 if (posicaoEl) {
-                    if (dados.posicao == null) {
+                    if (Number(dados.pontuacao_total) == 0) {
+                        posicaoEl.innerHTML = "Você não está em nenhuma posição com 0 pontos";
+                    } else if (dados.posicao == null) {
                         posicaoEl.innerHTML = "Você ainda não realizou quizzes.";
                     } else {
                         posicaoEl.innerHTML = "Sua posição é " + dados.posicao + " com " + formatarNumero(Number(dados.pontuacao_total) || 0) + " pontos";
@@ -352,5 +357,5 @@
 
     buscarMaiorPontuacao();
     buscarPosicaoUsuario();
-    
+
 </script>

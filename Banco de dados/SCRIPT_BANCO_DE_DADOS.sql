@@ -1,7 +1,7 @@
 CREATE DATABASE chaves;
 
 USE chaves;
-
+select * from usuario;
 -- TABELA PARA INSERÇÃO DE CADASTRO E CONSULTA PARA LOGIN
 CREATE TABLE usuario(
 id INT PRIMARY KEY AUTO_INCREMENT,
@@ -30,3 +30,15 @@ CREATE TABLE tentativa_quiz (
 );
 
 select * from usuario;
+
+   SELECT
+            u.id AS idUsuario,
+            u.nome AS nomeUsuario,
+            ROUND(AVG(t.pontuacao), 2) AS media_pontuacao,
+            SUM(t.acertos) AS total_acertos
+        FROM tentativa_quiz t
+        INNER JOIN usuario u ON t.id_usuario = u.id
+        GROUP BY u.id, u.nome
+        ORDER BY media_pontuacao DESC, total_acertos DESC
+        LIMIT 3;
+        

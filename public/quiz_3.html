@@ -10,7 +10,7 @@
     <script src="js/sessao.js"></script>
 </head>
 
-<body onload="iniciar_quiz(3)">
+<body onload="onloadEsconder()">
     <div class="janela">
         <!-- Navbar Lateral com Fundo de Tijolinhos -->
         <div class="header-left">
@@ -44,6 +44,7 @@
             <button type="button" class="btn-voltar-quiz" onclick="voltar_para_selecao()">Voltar para os quizzes</button>
 
             <div id="pontuacaoEJogo">
+                <button id="btnIniciarQuiz" onclick="iniciarQuiz()">INICIAR QUIZ</button>
                 <div id="pontuacao" class="flex-colunar width-fit-content border-primary">
                     <div id="pontuacaoDuranteJogo" class="flex-colunar padding-8">
                         <span class="width-fit-content">Quantidade de acertos: <span id="spanCertas"></span></span>
@@ -99,15 +100,13 @@
 
                 </div>
             </div>
-
-            <div id="tela_resultado" class="resultado_quiz">
-                <h2>Quiz finalizado com sucesso!</h2>
-                <p>Sua pontuação foi de <span id="spanResultadoPontuacao">0</span>/100 pontos.</p>
-            </div>
         </div>
     </div>
 
     <script>
+        // Número do quiz nesta página (usado ao salvar a tentativa no banco).
+        const numero_do_quiz = 3;
+
         const listaDeQuestoes = [
         {
                 pergunta: "De onde surgiu o apelido “Chespirito”, utilizado por Roberto Gómez Bolaños?",
