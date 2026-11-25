@@ -8,6 +8,8 @@
 
   <title>Chaves - Cadastro</title>
 
+  <script src="./js/sessao.js"></script>
+
   <!-- Importando fontes e estilos do projeto -->
   <link rel="stylesheet" href="./css/cadastro.css" />
   <link rel="preconnect" href="https://fonts.gstatic.com" />
@@ -58,11 +60,11 @@
         </div>
       </div>
 
-      <!-- Lado Direito: Degradê e Chapéu do Chaves -->
+      <!-- Lado Direito: Degradê e Chapéu do Chaques -->
       <div class="lado-degrade-info">
         <div class="conteudo-direito">
           <div class="container-imagem-chapu">
-            <img src="assets/chaves_chapeu.png" alt="Chapéu do Chaves" class="img-chapu-ilustracao">
+            <img src="assets/chaves_chapeu.png" alt="Chapéu do Chaques" class="img-chapu-ilustracao">
           </div>
           <h3>"Isso, isso, isso!"</h3>
           <p class="frase-convite">Já tem uma conta? Acesse por aqui e volte para a vila!</p>
@@ -79,31 +81,34 @@
 <script>
 function cadastrar() {
     // Captura valores dos inputs de cadastro
-    var nomeVar = input_nome.value;
-    var emailVar = input_email.value;
-    
+    var nomeVar = nome_input.value;
+    var emailVar = email_input.value;
+
     // Transforma o e-mail inteiro em letras minúsculas
     emailVar = emailVar.toLowerCase();
-    input_email.value = emailVar;
+    email_input.value = emailVar;
 
-    var senhaVar = input_senha.value;
-    var confirmacaoSenhaVar = input_confirmacao_senha.value;
+    var senhaVar = senha_input.value;
+    var confirmacaoSenhaVar = confirmacao_senha_input.value;
 
     // 1. Verificar campos em branco
     if (nomeVar == "" || emailVar == "" || senhaVar == "" || confirmacaoSenhaVar == "") {
-        alert("Preencha todos os campos!");
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "Preencha todos os campos!";
         return false;
     }
 
     // 2. Validação básica de e-mail (checa '@' e '.com' e posições inválidas)
     if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1 || emailVar.indexOf(".@") != -1 || emailVar.indexOf("@.") != -1) {
-        alert("E-mail inválido! Verifique o '@', o '.com' e os pontos.");
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "E-mail inválido! Verifique o '@', o '.com' e os pontos.";
         return false;
     }
 
     // 3. Validação de tamanho mínimo da senha (8 caracteres)
     if (senhaVar.length < 8) {
-        alert("A senha deve ter pelo menos 8 caracteres!");
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "A senha deve ter pelo menos 8 caracteres!";
         return false;
     }
 
@@ -117,13 +122,15 @@ function cadastrar() {
     }
 
     if (temNumero == false) {
-        alert("A senha precisa conter pelo menos um número!");
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "A senha precisa conter pelo menos um número!";
         return false;
     }
 
     // 5. Confirmação de senha
     if (senhaVar != confirmacaoSenhaVar) {
-        alert("A confirmação de senha está diferente da senha!");
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "A confirmação de senha está diferente da senha!";
         return false;
     }
 
@@ -139,13 +146,17 @@ function cadastrar() {
         }),
     }).then(function (resposta) {
         if (resposta.ok) {
-            alert("Cadastro realizado com sucesso!");
-            location.href = "login.html"; 
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "Cadastro realizado com sucesso! Redirecionando para tela de Login...";
+            setTimeout(function () {
+                location.href = "login.html";
+            }, 2000);
         } else {
-            alert("Houve um erro ao tentar realizar o cadastro!");
+            cardErro.style.display = "block";
+            mensagem_erro.innerHTML = "Houve um erro ao tentar realizar o cadastro!";
         }
     }).catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
+        console.log("#ERRO: " + erro);
     });
 
     return false;

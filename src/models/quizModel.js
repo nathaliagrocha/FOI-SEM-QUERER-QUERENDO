@@ -23,9 +23,9 @@ function buscarPorId(id_quiz) {
     var instrucaoSql = `
         SELECT id_quiz, nome, total_questoes, pontuacao_maxima
         FROM quiz
-        WHERE id_quiz = ?;
+        WHERE id_quiz = ${id_quiz};
     `;
-    return database.executar(instrucaoSql, [id_quiz]);
+    return database.executar(instrucaoSql);
 }
 
 // Model: buscarDesempenho
@@ -42,9 +42,9 @@ function buscarDesempenho(id_usuario) {
             END AS percentual_geral,
             COUNT(*) AS quizzes_concluidos
         FROM tentativa_quiz
-        WHERE id_usuario = ?;
+        WHERE id_usuario = ${id_usuario};
     `;
-    return database.executar(instrucaoSql, [id_usuario]);
+    return database.executar(instrucaoSql);
 }
 
 // Model: buscarRanking
@@ -77,11 +77,11 @@ function buscarMaiorPontuacaoPorQuiz(id_usuario) {
     var instrucaoSql = `
         SELECT q.id_quiz AS quiz_id, q.nome AS titulo, MAX(t.pontuacao) AS maior_pontuacao
         FROM quiz q
-        INNER JOIN tentativa_quiz t ON t.id_quiz = q.id_quiz AND t.id_usuario = ?
+        INNER JOIN tentativa_quiz t ON t.id_quiz = q.id_quiz AND t.id_usuario = ${id_usuario}
         GROUP BY q.id_quiz, q.nome
         ORDER BY q.id_quiz;
     `;
-    return database.executar(instrucaoSql, [id_usuario]);
+    return database.executar(instrucaoSql);
 }
 
 // Model: buscarPosicaoUsuario
@@ -108,7 +108,7 @@ function buscarPosicaoUsuario(id_usuario) {
                         FROM (
                             SELECT t.id_usuario, MAX(t.pontuacao) AS maior_pontuacao
                             FROM tentativa_quiz t
-                            WHERE t.id_usuario = ?
+                            WHERE t.id_usuario = ${id_usuario}
                             GROUP BY t.id_usuario, t.id_quiz
                         ) m3
                     )
@@ -119,12 +119,12 @@ function buscarPosicaoUsuario(id_usuario) {
                 FROM (
                     SELECT t.id_usuario, MAX(t.pontuacao) AS maior_pontuacao
                     FROM tentativa_quiz t
-                    WHERE t.id_usuario = ?
+                    WHERE t.id_usuario = ${id_usuario}
                     GROUP BY t.id_usuario, t.id_quiz
                 ) m4
             ) AS pontuacao_total;
     `;
-    return database.executar(instrucaoSql, [id_usuario, id_usuario]);
+    return database.executar(instrucaoSql);
 }
 
 module.exports = {

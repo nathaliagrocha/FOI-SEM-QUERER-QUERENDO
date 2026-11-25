@@ -81,10 +81,13 @@ function entrar() {
     var emailVar = email_input.value.trim();
     var senhaVar = senha_input.value;
 
+    aguardar();
+
     // 1. Verificar se os campos estão preenchidos
     if (emailVar == "" || senhaVar == "") {
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "Preencha todos os campos para fazer o login!";
+        finalizarAguardar();
         return false;
     }
 
@@ -92,6 +95,7 @@ function entrar() {
     if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1) {
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "E-mail inválido! Deve conter '@' e '.com'.";
+        finalizarAguardar();
         return false;
     }
 
@@ -110,7 +114,7 @@ function entrar() {
         })
     }).then(function (resposta) {
         if (resposta.ok) {
-            resposta.json().then(json => {
+            resposta.json().then(function (json) {
                 // Guarda os dados da sessão apenas nesta aba do navegador.
                 // O ID é o que o servidor usa para reconhecer o usuário.
                 sessionStorage.setItem("ID_USUARIO", json.id);
@@ -122,9 +126,11 @@ function entrar() {
         } else {
             cardErro.style.display = "block";
             mensagem_erro.innerHTML = "E-mail e/ou senha inválidos!";
+            finalizarAguardar();
         }
     }).catch(function (erro) {
-        console.log(`#ERRO: ${erro}`);
+        console.log("#ERRO: " + erro);
+        finalizarAguardar("Houve um erro ao tentar realizar o login!");
     });
 
     return false;
