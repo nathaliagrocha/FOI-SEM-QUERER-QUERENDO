@@ -27,7 +27,13 @@
 
   <!-- Container Principal com o Fundo Fixo do Banner -->
   <div class="container-cadastro-principal">
-    
+
+    <div class="alerta_erro">
+        <div class="card_erro" id="cardErro">
+            <span id="mensagem_erro"></span>
+        </div>
+    </div>
+
     <!-- Caixa Transparente Aumentada -->
     <div class="card-cadastro-container">
 
@@ -80,16 +86,21 @@
 
 <script>
 function cadastrar() {
-    // Captura valores dos inputs de cadastro
-    var nomeVar = nome_input.value;
-    var emailVar = email_input.value;
+    // Captura valores dos inputs de cadastro (por id no HTML)
+    var nomeInput = document.getElementById("input_nome");
+    var emailInput = document.getElementById("input_email");
+    var senhaInput = document.getElementById("input_senha");
+    var confirmacaoInput = document.getElementById("input_confirmacao_senha");
+
+    var nomeVar = nomeInput.value;
+    var emailVar = emailInput.value;
 
     // Transforma o e-mail inteiro em letras minúsculas
     emailVar = emailVar.toLowerCase();
-    email_input.value = emailVar;
+    emailInput.value = emailVar;
 
-    var senhaVar = senha_input.value;
-    var confirmacaoSenhaVar = confirmacao_senha_input.value;
+    var senhaVar = senhaInput.value;
+    var confirmacaoSenhaVar = confirmacaoInput.value;
 
     // 1. Verificar campos em branco
     if (nomeVar == "" || emailVar == "" || senhaVar == "" || confirmacaoSenhaVar == "") {
@@ -98,8 +109,16 @@ function cadastrar() {
         return false;
     }
 
-    // 2. Validação básica de e-mail (checa '@' e '.com' e posições inválidas)
-    if (emailVar.indexOf("@") == -1 || emailVar.indexOf(".com") == -1 || emailVar.indexOf(".@") != -1 || emailVar.indexOf("@.") != -1) {
+    // 2. Validação básica de e-mail: percorre os caracteres verificando se existe o "@"
+    var temArroba = false;
+    for (var i = 0; i < emailVar.length; i++) {
+        if (emailVar[i] === "@") {
+            temArroba = true;
+            break;
+        }
+    }
+
+    if (!temArroba || emailVar.indexOf(".com") == -1 || emailVar.indexOf(".@") != -1 || emailVar.indexOf("@.") != -1) {
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "E-mail inválido! Verifique o '@', o '.com' e os pontos.";
         return false;
@@ -124,6 +143,20 @@ function cadastrar() {
     if (temNumero == false) {
         cardErro.style.display = "block";
         mensagem_erro.innerHTML = "A senha precisa conter pelo menos um número!";
+        return false;
+    }
+
+    // 4.1 Verifica se a senha tem pelo menos uma letra maiúscula e uma minúscula
+    var temMaiuscula = false;
+    var temMinuscula = false;
+    for (var i = 0; i < senhaVar.length; i++) {
+        var ch = senhaVar[i];
+        if (ch >= 'A' && ch <= 'Z') temMaiuscula = true;
+        if (ch >= 'a' && ch <= 'z') temMinuscula = true;
+    }
+    if (!temMaiuscula || !temMinuscula) {
+        cardErro.style.display = "block";
+        mensagem_erro.innerHTML = "A senha precisa conter ao menos uma letra maiúscula e uma minúscula!";
         return false;
     }
 

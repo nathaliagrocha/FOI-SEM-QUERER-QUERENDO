@@ -19,7 +19,17 @@ function cadastrar(nome, email, senha) {
     return database.executar(instrucaoSql, [nome, email, senha]);
 }
 
+// Model: buscarPorEmail
+// Retorna usuários com o email informado (usado para verificar duplicidade)
+function buscarPorEmail(email) {
+    var instrucaoSql = `
+        SELECT id, email FROM usuario WHERE email = ?;
+    `;
+    return database.executar(instrucaoSql, [email]);
+}
+
 module.exports = {
     autenticar,
     cadastrar
+    , buscarPorEmail
 };

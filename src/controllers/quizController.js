@@ -147,8 +147,7 @@ function buscarPosicaoUsuario(req, res) {
 module.exports = {
     salvar_resultado,
     buscarDesempenho,
-    buscarRanking
-    ,
+    buscarRanking,
     buscarMaiorPontuacao,
     buscarPosicaoUsuario
 };

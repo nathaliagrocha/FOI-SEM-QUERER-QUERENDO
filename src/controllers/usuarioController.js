@@ -63,17 +63,35 @@ function cadastrar(req, res) {
     } else if (senha == "") {
         res.status(400).send("Sua senha está em branco!");
     } else {
-        usuarioModel.cadastrar(nome, email, senha)
-            .then(
-                function (resultado) {
-                    res.json(resultado);
+        // Validar senha: deve conter pelo menos uma letra maiúscula e uma minúscula
+        // usar toUpperCase/toLowerCase para verificar presença de maiúscula e minúscula
+        var temMaiuscula = senha !== senha.toLowerCase();
+        var temMinuscula = senha !== senha.toUpperCase();
+        if (!temMaiuscula || !temMinuscula) {
+            res.status(400).send("A senha deve conter pelo menos uma letra maiúscula e uma minúscula.");
+            return;
+        }
+        // Verificar se o email já existe
+        usuarioModel.buscarPorEmail(email)
+            .then(function (resultadoBusca) {
+                if (resultadoBusca.length > 0) {
+                    // Já existe usuário com esse email
+                    res.status(409).send("Este e-mail já está cadastrado.");
+                    return;
                 }
-            ).catch(
-                function (erro) {
-                    console.log("Erro ao realizar o cadastro: ", erro.message);
-                    res.status(500).send("Erro interno ao realizar o cadastro.");
-                }
-            );
+
+                // Não existe, prosseguir com o cadastro
+                usuarioModel.cadastrar(nome, email, senha)
+                    .then(function (resultado) {
+                        res.json(resultado);
+                    }).catch(function (erro) {
+                        console.log("Erro ao realizar o cadastro: ", erro.message);
+                        res.status(500).send("Erro interno ao realizar o cadastro.");
+                    });
+            }).catch(function (erro) {
+                console.log("Erro ao verificar email: ", erro.message);
+                res.status(500).send("Erro interno ao verificar email.");
+            });
     }
 }
 

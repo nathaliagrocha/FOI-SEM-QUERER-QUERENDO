@@ -211,6 +211,24 @@ html, body {
     background-color: rgba(0, 0, 0, 0.8);
 }
 
+/* Alerta de Erro (mesmo padrão do login.css) */
+.alerta_erro {
+    position: absolute;
+    top: 20px;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 200;
+}
+
+.card_erro {
+    background-color: #ff3333;
+    color: white;
+    padding: 10px 20px;
+    border-radius: 5px;
+    display: none;
+    font-weight: bold;
+}
+
 /* Responsividade para telas menores */
 @media (max-width: 768px) {
     .card-cadastro-container {

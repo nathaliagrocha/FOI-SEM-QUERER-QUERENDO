@@ -21,8 +21,9 @@ function salvar_resultado(id_usuario, id_quiz, acertos, total_questoes, pontuaca
 // Busca um quiz pelo id na tabela 'quiz' para saber o total de questões e a pontuação máxima.
 function buscarPorId(id_quiz) {
     var instrucaoSql = `
+        -- Usar view 'vw_quiz' para retornar dados do quiz (criar view no banco se necessário)
         SELECT id_quiz, nome, total_questoes, pontuacao_maxima
-        FROM quiz
+        FROM vw_quiz
         WHERE id_quiz = ${id_quiz};
     `;
     return database.executar(instrucaoSql);
