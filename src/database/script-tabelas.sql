@@ -6,7 +6,7 @@ USE chaves;
 CREATE TABLE usuario(
 id INT PRIMARY KEY AUTO_INCREMENT,
 nome VARCHAR(45),
-email VARCHAR (100),
+email VARCHAR (100) unique,
 senha VARCHAR(255)
 );
 
@@ -85,7 +85,7 @@ SELECT
             FROM (
                 SELECT u2.id AS id_usuario, SUM(m2.maior_pontuacao) AS total_pontuacao
                 FROM (
-                    SELECT t.id_usuario, MAX(t.pontuacao) AS maior_pontuacao
+                    SELECT t.id_usuario, MAX(t.pontuacao) AS maior_pontua  cao
                     FROM tentativa_quiz t
                     GROUP BY t.id_usuario, t.id_quiz
                 ) m2
