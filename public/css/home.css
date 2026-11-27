@@ -137,12 +137,19 @@ html, body {
 
 /* --- NAVBAR MAIS TRANSPARENTE --- */
 .navbar {
-    background-color: rgba(43, 41, 36, 0.514); 
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    background-color: rgba(255, 255, 255, 0.08); /* vidro translúcido */
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    box-shadow: 0 4px 20px rgba(0,0,0,0.25);
     display: flex;
     justify-content: flex-end;
     align-items: center;
     padding: 20px 40px;
-    z-index: 100;
+    z-index: 9999;
 }
 
 .navbar-links {
